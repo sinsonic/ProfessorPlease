@@ -1,0 +1,100 @@
+{
+  "students": [
+    {
+      "id": "student_001",
+      "name": "Alex Novak",
+      "major": "Physics",
+      "statements": [
+        {
+          "statement": "Bananas are naturally radioactive.",
+          "isCorrect": true,
+          "explanation": "Bananas contain potassium, including a small amount of the radioactive isotope potassium‑40. The level is harmless but measurable."
+        },
+        {
+          "statement": "The Great Wall of China is visible from the Moon with the naked eye.",
+          "isCorrect": false,
+          "explanation": "From the Moon, individual human structures are not visible without aid. Even from low Earth orbit it’s very hard to see unaided."
+        },
+        {
+          "statement": "A day on Venus is longer than a year on Venus.",
+          "isCorrect": true,
+          "explanation": "Venus rotates very slowly: one rotation takes about 243 Earth days, while one orbit is about 225 Earth days."
+        },
+        {
+          "statement": "Lightning never strikes the same place twice.",
+          "isCorrect": false,
+          "explanation": "Lightning can and does strike the same place repeatedly—tall structures like towers can be hit many times."
+        },
+        {
+          "statement": "Octopuses have three hearts.",
+          "isCorrect": true,
+          "explanation": "Two hearts pump blood to the gills, and one pumps it to the rest of the body."
+        }
+      ]
+    },
+    {
+      "id": "student_002",
+      "name": "Mina Lee",
+      "major": "Computer Science",
+      "statements": [
+        {
+          "statement": "Pure water conducts electricity well.",
+          "isCorrect": false,
+          "explanation": "Pure water is a poor conductor; most conductivity in everyday water comes from dissolved ions (salts/minerals)."
+        },
+        {
+          "statement": "Humans use only 10% of their brains.",
+          "isCorrect": false,
+          "explanation": "Brain imaging shows we use many areas across normal activity; there is no 'unused 90%'."
+        },
+        {
+          "statement": "The Eiffel Tower can be slightly taller during hot days.",
+          "isCorrect": true,
+          "explanation": "Metal expands with heat; the tower’s height increases slightly in warm temperatures due to thermal expansion."
+        },
+        {
+          "statement": "Goldfish have a memory that lasts only three seconds.",
+          "isCorrect": false,
+          "explanation": "Goldfish can learn and remember tasks for weeks or months in experiments."
+        },
+        {
+          "statement": "Some metals can 'remember' their original shape after being bent.",
+          "isCorrect": true,
+          "explanation": "Shape‑memory alloys (like Nitinol) can return to a preset shape when heated due to a reversible change in crystal structure."
+        }
+      ]
+    },
+    {
+      "id": "student_003",
+      "name": "Diego Silva",
+      "major": "History",
+      "statements": [
+        {
+          "statement": "The first email was sent in the 1970s.",
+          "isCorrect": true,
+          "explanation": "Ray Tomlinson is credited with sending the first networked email in 1971."
+        },
+        {
+          "statement": "The printing press was invented before the year 1000.",
+          "isCorrect": false,
+          "explanation": "While early woodblock printing existed earlier, Gutenberg’s movable-type printing press was developed around the mid-1400s."
+        },
+        {
+          "statement": "The Roman Empire officially split into Eastern and Western halves in 395 CE.",
+          "isCorrect": true,
+          "explanation": "After Theodosius I died in 395, the empire was divided between his sons, marking a formal split."
+        },
+        {
+          "statement": "The Library of Alexandria burned down in a single fire on one specific day.",
+          "isCorrect": false,
+          "explanation": "Its decline likely happened over time through multiple events; there is no single confirmed 'one-day' destruction story."
+        },
+        {
+          "statement": "The term 'Renaissance' means 'rebirth'.",
+          "isCorrect": true,
+          "explanation": "From French/Latin roots, it literally means 'rebirth', referring to renewed interest in classical art and learning."
+        }
+      ]
+    }
+  ]
+}
