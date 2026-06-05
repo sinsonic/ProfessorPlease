@@ -5,7 +5,7 @@
       "title": "The Bribe",
       "description": "A failing student discreetly offers money to bump their grade.",
       "grades": ["D", "F"],
-      "chance": 100,
+      "chance": 20,
       "template": "confrontation",
       "banner": "Grade: {grade} — Uh oh...",
       "prop": "envelope",
@@ -46,7 +46,7 @@
       "title": "Scholarship on the Line",
       "description": "A C-grade student begs for help before losing their scholarship.",
       "grades": ["C"],
-      "chance": 100,
+      "chance": 30,
       "template": "confrontation",
       "banner": "Grade: {grade} — A student wants to talk",
       "reputationChange": 0,
@@ -85,7 +85,7 @@
       "title": "Thank-You Gift",
       "description": "An A student brings a small gift after an excellent exam.",
       "grades": ["A"],
-      "chance": 100,
+      "chance": 30,
       "template": "confrontation",
       "banner": "Grade: {grade} — Unexpected visitor",
       "prop": "gift",
@@ -116,6 +116,399 @@
           "outcome": "You declined professionally. Boundaries intact.",
           "animation": "student_leaves",
           "reputationChange": 4,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "grade_dispute",
+      "title": "The Regrade Request",
+      "description": "A B-grade student insists one question was graded too harshly.",
+      "grades": ["B"],
+      "chance": 45,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Office hours overrun",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"Professor, question three was basically correct. Can you regrade it?\"",
+        "professorPrompt": "Professor: \"They've marked up the exam with notes. Regrade or hold the line?\""
+      },
+      "choices": [
+        {
+          "id": "regrade",
+          "label": "REGRADE",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Thank you! I knew you'd be fair.\"",
+          "professorReply": "Professor: \"Fine. I'll review it tonight and update the score.\"",
+          "outcome": "You agreed to a regrade. Word may spread that your grading is negotiable.",
+          "animation": "none",
+          "reputationChange": -1,
+          "moneyChange": 0
+        },
+        {
+          "id": "deny_regrade",
+          "label": "HOLD GRADE",
+          "color": "neutral",
+          "studentReply": "{studentName}: \"Alright. I still disagree, but thanks for listening.\"",
+          "professorReply": "Professor: \"I reviewed it again. The grade stands.\"",
+          "outcome": "You held firm. Consistency preserved.",
+          "animation": "student_leaves",
+          "reputationChange": 2,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "parent_pressure",
+      "title": "The Parent Email",
+      "description": "A failing student's parent emails demanding a grade change.",
+      "grades": ["D", "F"],
+      "chance": 35,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Inbox zero ruined",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"My parent emailed the department about my grade... They're waiting for your reply.\"",
+        "professorPrompt": "Professor: \"Pressure from home. Bend or document everything?\""
+      },
+      "choices": [
+        {
+          "id": "bump_grade",
+          "label": "BUMP GRADE",
+          "color": "accept",
+          "studentReply": "{studentName}: \"They'll be so relieved.\"",
+          "professorReply": "Professor: \"I'll move it to a D. This is a one-time exception.\"",
+          "outcome": "You changed the grade under pressure. Your inbox is quiet—for now.",
+          "animation": "none",
+          "reputationChange": -6,
+          "moneyChange": 0
+        },
+        {
+          "id": "document_refuse",
+          "label": "REFUSE & LOG",
+          "color": "reject",
+          "studentReply": "{studentName}: \"Wow. Okay.\"",
+          "professorReply": "Professor: \"The grade reflects the exam. I've documented my reasoning.\"",
+          "outcome": "You refused and documented. Professional, but expect follow-up emails.",
+          "animation": "student_leaves",
+          "reputationChange": 4,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "cheating_witness",
+      "title": "The Cheating Tip",
+      "description": "A student reports that someone copied answers during the exam.",
+      "grades": ["C", "D"],
+      "chance": 40,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Academic integrity alert",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"Professor, the person next to me was copying. I think you should know.\"",
+        "professorPrompt": "Professor: \"An anonymous-style tip at your desk. Investigate or let it go?\""
+      },
+      "choices": [
+        {
+          "id": "investigate",
+          "label": "INVESTIGATE",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Thank you for taking it seriously.\"",
+          "professorReply": "Professor: \"I'll review the seating chart and camera footage.\"",
+          "outcome": "You opened an integrity review. The department notices your vigilance.",
+          "animation": "none",
+          "reputationChange": 5,
+          "moneyChange": 0
+        },
+        {
+          "id": "ignore_tip",
+          "label": "DROP IT",
+          "color": "neutral",
+          "studentReply": "{studentName}: \"Seriously? After I came forward?\"",
+          "professorReply": "Professor: \"I don't have enough evidence. Let's move on.\"",
+          "outcome": "You let it slide. Faster day, murkier conscience.",
+          "animation": "student_leaves",
+          "reputationChange": -3,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "extension_plea",
+      "title": "The Extension Plea",
+      "description": "A student begs for more time, claiming a family emergency.",
+      "grades": ["B", "C"],
+      "chance": 50,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Deadline drama",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"Professor, I had a family emergency. Can I retake tomorrow?\"",
+        "professorPrompt": "Professor: \"Hard to verify, easy to sympathize. Grant an extension?\""
+      },
+      "choices": [
+        {
+          "id": "grant_extension",
+          "label": "GRANT EXTENSION",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Thank you so much. I won't forget this.\"",
+          "professorReply": "Professor: \"One retake tomorrow. Same format, no notes.\"",
+          "outcome": "You granted mercy. Compassion noted—maybe exploited later.",
+          "animation": "none",
+          "reputationChange": 2,
+          "moneyChange": 0
+        },
+        {
+          "id": "deny_extension",
+          "label": "NO EXTENSION",
+          "color": "reject",
+          "studentReply": "{studentName}: \"I guess I'll accept the grade then.\"",
+          "professorReply": "Professor: \"Policy is clear. The exam date was announced weeks ago.\"",
+          "outcome": "You enforced the deadline. Rules are rules.",
+          "animation": "student_leaves",
+          "reputationChange": 1,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "research_assistant",
+      "title": "The RA Offer",
+      "description": "A high-performing student offers free research help—for a price in grades.",
+      "grades": ["A", "B"],
+      "chance": 30,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Ambitious proposal",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"I'd love to be your research assistant... if we can 'align' my grade first.\"",
+        "professorPrompt": "Professor: \"Talent on display, ethics in question.\""
+      },
+      "choices": [
+        {
+          "id": "hire_with_grade",
+          "label": "HIRE & BUMP",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Perfect. I'll start Monday.\"",
+          "professorReply": "Professor: \"Fine. A on the exam, and you help with data entry.\"",
+          "outcome": "You traded grades for labor. Productive—and problematic.",
+          "animation": "none",
+          "reputationChange": -5,
+          "moneyChange": 0
+        },
+        {
+          "id": "hire_fair",
+          "label": "HIRE FAIRLY",
+          "color": "neutral",
+          "studentReply": "{studentName}: \"Fair enough. I still want the position.\"",
+          "professorReply": "Professor: \"Grade stays. Apply through the official RA posting.\"",
+          "outcome": "You separated merit from negotiation. Integrity intact.",
+          "animation": "student_leaves",
+          "reputationChange": 3,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "dean_complaint",
+      "title": "The Dean Threat",
+      "description": "An F-grade student threatens a formal complaint to the dean.",
+      "grades": ["F"],
+      "chance": 55,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Escalation incoming",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"Fail me and I'm filing a complaint with the dean.\"",
+        "professorPrompt": "Professor: \"Bluster or real threat? Stand your ground or compromise?\""
+      },
+      "choices": [
+        {
+          "id": "compromise",
+          "label": "COMPROMISE",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Smart choice, Professor.\"",
+          "professorReply": "Professor: \"I'll change it to a D. No complaint, no discussion.\"",
+          "outcome": "You bought peace. The dean never calls—but you know why.",
+          "animation": "none",
+          "reputationChange": -7,
+          "moneyChange": 0
+        },
+        {
+          "id": "stand_ground",
+          "label": "STAND GROUND",
+          "color": "reject",
+          "studentReply": "{studentName}: \"You'll hear from my lawyer!\"",
+          "professorReply": "Professor: \"File whatever you want. The exam speaks for itself.\"",
+          "outcome": "You held the line. Stressful, but your record is clean.",
+          "animation": "kick_out",
+          "reputationChange": 5,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "exam_leak",
+      "title": "The Exam Leak",
+      "description": "A student offers to share 'study materials' that look suspiciously like your exam.",
+      "grades": ["B", "C"],
+      "chance": 25,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Leak detected?",
+      "prop": "envelope",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"Professor, I found these 'study notes' online... they look like your exam.\"",
+        "professorPrompt": "Professor: \"A folder of leaked questions. Buy silence or blow the whistle?\""
+      },
+      "choices": [
+        {
+          "id": "report_leak",
+          "label": "REPORT LEAK",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Good. Cheaters shouldn't win.\"",
+          "professorReply": "Professor: \"Thank you. I'm reporting this to integrity office immediately.\"",
+          "outcome": "You reported the leak. New exam needed, but justice served.",
+          "animation": "none",
+          "reputationChange": 6,
+          "moneyChange": 0
+        },
+        {
+          "id": "ignore_leak",
+          "label": "IGNORE IT",
+          "color": "neutral",
+          "studentReply": "{studentName}: \"Really? You're just going to let it slide?\"",
+          "professorReply": "Professor: \"Can't prove anything. Let's pretend this never happened.\"",
+          "outcome": "You looked away. Easier day, compromised exam.",
+          "animation": "student_leaves",
+          "reputationChange": -4,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "coffee_bribe",
+      "title": "The Coffee Deal",
+      "description": "A solid student offers daily coffee runs in exchange for 'flexible' grading.",
+      "grades": ["A", "B"],
+      "chance": 35,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Caffeine diplomacy",
+      "prop": "gift",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"I run the campus café. Free lattes all semester—for a little grading flexibility?\"",
+        "professorPrompt": "Professor: \"A gift card and a wink. Tempting on a Monday morning.\""
+      },
+      "choices": [
+        {
+          "id": "accept_coffee",
+          "label": "ACCEPT DEAL",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Oat milk, extra shot—coming right up.\"",
+          "professorReply": "Professor: \"...One latte. And we're never discussing this again.\"",
+          "outcome": "You traded ethics for caffeine. Delicious, dubious.",
+          "animation": "accept_gift",
+          "reputationChange": -3,
+          "moneyChange": 15
+        },
+        {
+          "id": "decline_coffee",
+          "label": "DECLINE",
+          "color": "neutral",
+          "studentReply": "{studentName}: \"Your loss. The espresso is excellent.\"",
+          "professorReply": "Professor: \"I pay for my own coffee. Grade stands.\"",
+          "outcome": "You declined. Bitter coffee, clean conscience.",
+          "animation": "student_leaves",
+          "reputationChange": 2,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "impostor_exam",
+      "title": "The Impostor",
+      "description": "A student claims someone else sat their exam and got a better grade.",
+      "grades": ["D", "F"],
+      "chance": 20,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Identity crisis",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"Professor, my twin took my seat by mistake. That's not my handwriting!\"",
+        "professorPrompt": "Professor: \"A wild story with no proof. Believe them or verify?\""
+      },
+      "choices": [
+        {
+          "id": "verify_id",
+          "label": "VERIFY ID",
+          "color": "accept",
+          "studentReply": "{studentName}: \"Check the sign-in sheet. I wasn't even there!\"",
+          "professorReply": "Professor: \"I'll pull the seating log and ID photos.\"",
+          "outcome": "You investigated properly. Truth will out.",
+          "animation": "none",
+          "reputationChange": 3,
+          "moneyChange": 0
+        },
+        {
+          "id": "dismiss_claim",
+          "label": "DISMISS",
+          "color": "reject",
+          "studentReply": "{studentName}: \"You're ruining my life over a mix-up!\"",
+          "professorReply": "Professor: \"Nice try. The grade stays.\"",
+          "outcome": "You dismissed the claim. Quick resolution—maybe wrong.",
+          "animation": "kick_out",
+          "reputationChange": -2,
+          "moneyChange": 0
+        }
+      ]
+    },
+    {
+      "id": "donation_hint",
+      "title": "The Donation Hint",
+      "description": "A wealthy student's family hints at a building donation—if grades improve.",
+      "grades": ["C", "D"],
+      "chance": 15,
+      "template": "confrontation",
+      "banner": "Grade: {grade} — Institutional pressure",
+      "prop": "envelope",
+      "reputationChange": 0,
+      "moneyChange": 0,
+      "dialogue": {
+        "studentOffer": "{studentName}{majorSuffix}: \"My family is discussing a library donation... they'd love to see a stronger transcript.\"",
+        "professorPrompt": "Professor: \"A donation brochure on your desk. Ethics vs. renovations.\""
+      },
+      "choices": [
+        {
+          "id": "adjust_for_donation",
+          "label": "ADJUST GRADE",
+          "color": "accept",
+          "studentReply": "{studentName}: \"The new wing will have your name on a plaque.\"",
+          "professorReply": "Professor: \"B minus. Don't make me regret this.\"",
+          "outcome": "You traded grades for institutional funding. The dean smiles.",
+          "animation": "accept_bribe",
+          "reputationChange": -8,
+          "moneyChange": 200
+        },
+        {
+          "id": "refuse_donation",
+          "label": "REFUSE",
+          "color": "reject",
+          "studentReply": "{studentName}: \"My parents won't be pleased.\"",
+          "professorReply": "Professor: \"Donations don't buy grades. Good day.\"",
+          "outcome": "You refused. The library renovation can wait.",
+          "animation": "kick_out",
+          "reputationChange": 6,
           "moneyChange": 0
         }
       ]
