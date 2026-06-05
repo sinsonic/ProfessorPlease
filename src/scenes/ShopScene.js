@@ -6,7 +6,8 @@ import {
   ownsDecoration,
   purchaseShopItem,
 } from "../game/careerStore";
-import { drawClassroom } from "../game/classroomVisuals";
+import { exitShop } from "../game/shopAccess";
+import { drawClassroom, replaceClassroom } from "../game/classroomVisuals";
 import { loadShopCatalog } from "../game/shopLoader";
 
 export class ShopScene extends Phaser.Scene {
@@ -15,7 +16,7 @@ export class ShopScene extends Phaser.Scene {
   }
 
   init(data) {
-    this.nextDay = Number.isFinite(data?.nextDay) ? data.nextDay : loadCareer().day;
+    this.parentScene = data?.parentScene || null;
   }
 
   create() {
@@ -43,7 +44,28 @@ export class ShopScene extends Phaser.Scene {
     this.activeTab = "decoration";
     this.shop = null;
 
+    this.createExitButton();
     this.loadCatalog();
+  }
+
+  createExitButton() {
+    const x = 140;
+    const y = 1840;
+    this.add.graphics()
+      .fillStyle(0x000000, 0.08)
+      .fillRoundedRect(x - 110 + 4, y - 36 + 6, 220, 72, 18)
+      .setDepth(60);
+    const bg = this.add.rectangle(x, y, 220, 72, 0x64748b)
+      .setStrokeStyle(0, 0, 0)
+      .setInteractive({ useHandCursor: true })
+      .setDepth(60);
+    this.add.text(x, y, "EXIT", {
+      fontFamily: "Arial",
+      fontSize: "32px",
+      fontStyle: "bold",
+      color: "#ffffff",
+    }).setOrigin(0.5).setDepth(61);
+    bg.on("pointerdown", () => exitShop(this, this.parentScene));
   }
 
   async loadCatalog() {
@@ -52,10 +74,8 @@ export class ShopScene extends Phaser.Scene {
       this.statusText.setText("Spend your salary on decorations and next-day boosters.");
       this.renderTabs();
       this.renderItems();
-      this.renderContinueButton();
     } catch (error) {
       this.statusText.setText(`Shop unavailable: ${error.message}`);
-      this.renderContinueButton();
     }
   }
 
@@ -177,27 +197,11 @@ export class ShopScene extends Phaser.Scene {
     if (result.ok) {
       this.statusText.setText(`Purchased ${item.name}!`);
       this.renderItems();
-      if (item.type === "decoration" && this.classroom?.root) {
-        this.classroom.root.destroy();
-        this.classroom = drawClassroom(this, { depth: 0, paperCount: 1 });
+      if (item.type === "decoration") {
+        this.classroom = replaceClassroom(this, this.classroom, { depth: 0, paperCount: 1 });
       }
     } else {
       this.statusText.setText(result.reason);
     }
-  }
-
-  renderContinueButton() {
-    const y = 1780;
-    const bg = this.add.rectangle(540, y, 640, 120, 0x2b9f89)
-      .setStrokeStyle(0, 0, 0)
-      .setInteractive({ useHandCursor: true })
-      .setDepth(25);
-    this.add.text(540, y, `START DAY ${this.nextDay}`, {
-      fontFamily: "Arial",
-      fontSize: "48px",
-      fontStyle: "bold",
-      color: "#ffffff",
-    }).setOrigin(0.5).setDepth(26);
-    bg.on("pointerdown", () => this.scene.start("WorldsScene"));
   }
 }

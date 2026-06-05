@@ -5,6 +5,7 @@ import { gameplayStart, gameplayStop } from "../game/crazyGamesSdk";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { adjustReputationForAnswer, recordStudentGraded } from "../game/careerStore";
 import { goToExamResult } from "../game/examResultFlow";
+import { createShopIcon } from "../game/shopAccess";
 
 const STATEMENTS_PER_STUDENT = 5;
 
@@ -572,7 +573,7 @@ export class QuizScene extends Phaser.Scene {
   }
 
   createBackground() {
-    drawClassroom(this, { depth: 0, paperCount: 2 });
+    this.classroom = drawClassroom(this, { depth: 0, paperCount: 2 });
     this.dragTint = this.add.rectangle(540, 960, 1080, 1920, 0xe35d7a, 0).setDepth(20);
     this.flashTint = this.add.rectangle(540, 960, 1080, 1920, 0x2b9f89, 0).setDepth(20);
   }
@@ -595,6 +596,8 @@ export class QuizScene extends Phaser.Scene {
       fontStyle: "bold",
       align: "right",
     }).setOrigin(1, 0.5).setDepth(30);
+    createShopIcon(this, { depth: 60 });
+
     this.statusText = this.add
       .text(this.scale.width / 2, 210, "Loading run...", {
         fontFamily: "Arial",

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { completeWorkDay, loadCareer } from "../game/careerStore";
+import { createShopIcon } from "../game/shopAccess";
 import { drawClassroom } from "../game/classroomVisuals";
 import { getDailySalaryForReputation } from "../game/salaryLoader";
 
@@ -11,7 +12,7 @@ export class DayEndScene extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor("#e9dcc8");
-    drawClassroom(this, { depth: 0, paperCount: 2 });
+    this.classroom = drawClassroom(this, { depth: 0, paperCount: 2 });
 
     const beforePay = loadCareer();
     this.careerHud = createCareerHud(this, { depth: 30, top: 0 });
@@ -87,9 +88,11 @@ export class DayEndScene extends Phaser.Scene {
         }).setOrigin(0.5);
       }
 
-      this.createButton(cx, cy + 340, "VISIT SHOP", () => {
-        this.scene.start("ShopScene", { nextDay: result.career.day });
+      this.createButton(cx, cy + 340, "CONTINUE", () => {
+        this.scene.start("WorldsScene");
       }, 640, 140, 52, true);
+
+      createShopIcon(this, { depth: 60 });
     } catch (error) {
       loading.setText(`Payday error: ${error.message}`);
       loading.setColor("#dc2626");

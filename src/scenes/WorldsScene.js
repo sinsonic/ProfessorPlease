@@ -3,6 +3,7 @@ import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { loadRandomStudent } from "../game/dbLoader";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { activatePendingBoosters, loadCareer, STUDENTS_PER_DAY } from "../game/careerStore";
+import { createShopIcon } from "../game/shopAccess";
 import {
   loadProgress,
 } from "../game/progressStore";
@@ -77,7 +78,7 @@ export class WorldsScene extends Phaser.Scene {
     startButton.bg.setDepth(10);
     startButton.label.setDepth(11);
 
-    // Minimal start screen.
+    createShopIcon(this, { depth: 60 });
   }
 
   async startExam() {

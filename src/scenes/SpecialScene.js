@@ -14,6 +14,7 @@ import {
   getChoiceEffects,
   interpolateSceneText,
 } from "../game/specialScenesLoader";
+import { createShopIcon } from "../game/shopAccess";
 import { continueAfterStudent, getContinueButtonLabel } from "../game/studentDayFlow";
 
 const CHOICE_COLORS = {
@@ -52,6 +53,7 @@ export class SpecialScene extends Phaser.Scene {
     this.careerHud = createCareerHud(this, { depth: 35, top: 0 });
     updateCareerHud(this.careerHud);
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 5 });
+    createShopIcon(this, { depth: 60 });
     this.layer = this.add.container(0, 0).setDepth(20);
 
     this.professor = createProfessorFigure(this);

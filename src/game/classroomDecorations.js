@@ -1,4 +1,4 @@
-import { TABLE } from "./classroomVisuals";
+import { TABLE } from "./classroomConstants";
 import { loadCareer } from "./careerStore";
 
 function drawDeskPlant(scene, root) {

@@ -3,6 +3,7 @@ import { drawClassroom } from "../game/classroomVisuals";
 import { happytime } from "../game/crazyGamesSdk";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { gradeFromCorrectCount } from "../game/grades";
+import { createShopIcon } from "../game/shopAccess";
 import { continueAfterStudent, getContinueButtonLabel } from "../game/studentDayFlow";
 
 export class QuizSummaryScene extends Phaser.Scene {
@@ -22,6 +23,7 @@ export class QuizSummaryScene extends Phaser.Scene {
     this.careerHud = createCareerHud(this, { depth: 30, top: 0 });
     updateCareerHud(this.careerHud);
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 4 });
+    createShopIcon(this, { depth: 60 });
     const grade = gradeFromCorrectCount(this.correctCount);
     if (grade === "A") {
       happytime();

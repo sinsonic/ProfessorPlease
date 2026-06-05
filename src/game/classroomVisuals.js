@@ -1,6 +1,7 @@
+import { TABLE } from "./classroomConstants";
 import { drawOwnedDecorations } from "./classroomDecorations";
 
-export const TABLE = { x: 540, y: 1540, width: 720, height: 120 };
+export { TABLE };
 
 function drawPaper(scene, x, y, rotation = 0, alpha = 1, parent = null) {
   const paper = scene.add.container(x, y);
@@ -74,9 +75,16 @@ export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
     ...papers,
   ]);
 
-  drawOwnedDecorations(scene, root);
+  const decorLayer = scene.add.container(0, 0).setDepth(depth + 1);
+  drawOwnedDecorations(scene, decorLayer);
 
-  return { root, table: TABLE, papers };
+  return { root, decorLayer, table: TABLE, papers };
+}
+
+export function replaceClassroom(scene, previous, options) {
+  previous?.root?.destroy();
+  previous?.decorLayer?.destroy();
+  return drawClassroom(scene, options);
 }
 
 export function createStudentFigure(scene, x, y) {
