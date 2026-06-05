@@ -1,6 +1,9 @@
 import { defineConfig } from "vite";
 
-// CrazyGames (and many portals) host games under a subpath; relative asset URLs avoid 404s.
+// GitHub Pages project sites are served from /ProfessorPlease/.
+// CrazyGames and local preview use relative "./" paths.
+const isGitHubPages = process.env.GITHUB_PAGES === "true";
+
 export default defineConfig({
-  base: "./",
+  base: isGitHubPages ? "/ProfessorPlease/" : "./",
 });
