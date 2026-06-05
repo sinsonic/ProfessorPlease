@@ -14,12 +14,13 @@ export class QuizScene extends Phaser.Scene {
     this.correctCount = 0;
   }
 
-  init() {
-    this.student = null;
+  init(data) {
+    this.student = data?.student || null;
     this.statements = [];
     this.currentIndex = 0;
     this.correctCount = 0;
     this.examStarted = false;
+    this.skipIntro = Boolean(data?.student);
   }
 
   create() {
@@ -30,38 +31,47 @@ export class QuizScene extends Phaser.Scene {
     this.createHud();
     this.statusText.setText("Loading student...");
 
+    if (this.skipIntro && this.student) {
+      this.beginExamWithStudent(this.student);
+      return;
+    }
+
     loadRandomStudent()
       .then((student) => {
         if (!this.sys?.isActive()) return;
-        this.student = student;
-        this.statements = student?.statements || [];
-        if (!Array.isArray(this.statements) || this.statements.length !== STATEMENTS_PER_STUDENT) {
-          this.renderError("No student statements found.");
-          return;
-        }
-        this.statusText.setText("A student is on the way...");
-        this.setQuizUiVisible(false);
-        const beginExam = () => {
-          if (this.examStarted) return;
-          this.examStarted = true;
-          this.setQuizUiVisible(true);
-          try {
-            this.renderQuestion();
-          } catch (error) {
-            this.renderError(`Failed to start exam: ${error.message}`);
-          }
-        };
-        playStudentApproach(this, {
-          studentName: this.student.name,
-          major: this.student.major,
-          depth: 8,
-          onComplete: beginExam,
-        });
+        this.runStudentIntro(student);
       })
       .catch((error) => {
         if (!this.sys?.isActive()) return;
         this.renderError(`Failed to load students: ${error.message}`);
       });
+  }
+
+  beginExamWithStudent(student) {
+    this.student = student;
+    this.statements = student?.statements || [];
+    if (!Array.isArray(this.statements) || this.statements.length !== STATEMENTS_PER_STUDENT) {
+      this.renderError("No student statements found.");
+      return;
+    }
+    this.examStarted = true;
+    this.setQuizUiVisible(true);
+    try {
+      this.renderQuestion();
+    } catch (error) {
+      this.renderError(`Failed to start exam: ${error.message}`);
+    }
+  }
+
+  runStudentIntro(student) {
+    this.statusText.setText("A student is on the way...");
+    this.setQuizUiVisible(false);
+    playStudentApproach(this, {
+      studentName: student.name,
+      major: student.major,
+      depth: 30,
+      onComplete: () => this.beginExamWithStudent(student),
+    });
   }
 
   setQuizUiVisible(visible) {

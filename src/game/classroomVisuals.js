@@ -1,4 +1,4 @@
-const TABLE = { x: 540, y: 1540, width: 720, height: 120 };
+export const TABLE = { x: 540, y: 1540, width: 720, height: 120 };
 
 function drawPaper(scene, x, y, rotation = 0, alpha = 1, parent = null) {
   const paper = scene.add.container(x, y);
@@ -105,45 +105,51 @@ export function playStudentApproach(scene, {
   onComplete,
   depth = 50,
 } = {}) {
-  const overlay = scene.add.rectangle(540, 960, 1080, 1920, 0x0f172a, 0.45).setDepth(depth);
-  const classroom = drawClassroom(scene, { depth: depth + 1, paperCount: 2 });
-  const student = createStudentFigure(scene, 1180, TABLE.y + 40).setDepth(depth + 2);
+  const layer = scene.add.container(0, 0).setDepth(depth);
+  let finished = false;
+  const timers = [];
+  const deliveredPapers = [];
 
-  const nameTag = scene.add.text(540, 1180, "", {
+  const schedule = (fn, delayMs) => {
+    const id = window.setTimeout(fn, delayMs);
+    timers.push(id);
+  };
+
+  const status = scene.add.text(540, 1180, "A student is approaching...", {
     fontFamily: "Arial",
-    fontSize: "42px",
+    fontSize: "34px",
     fontStyle: "bold",
     color: "#1e2b57",
     align: "center",
     backgroundColor: "#fffdf7",
-    padding: { x: 24, y: 12 },
-  }).setOrigin(0.5).setAlpha(0).setDepth(depth + 3);
+    padding: { x: 20, y: 10 },
+  }).setOrigin(0.5);
+  layer.add(status);
 
-  const status = scene.add.text(540, 1260, "A student is approaching...", {
+  const nameTag = scene.add.text(540, 1260, "", {
     fontFamily: "Arial",
     fontSize: "30px",
     color: "#64748b",
-  }).setOrigin(0.5).setDepth(depth + 3);
+    align: "center",
+  }).setOrigin(0.5).setAlpha(0);
+  layer.add(nameTag);
 
-  const deliveredPapers = [];
+  const student = createStudentFigure(scene, 0, 0);
+  student.setPosition(1120, TABLE.y + 20);
+  layer.add(student);
+
   const paperTargets = [
-    { x: TABLE.x - 70, y: TABLE.y - 20, r: -0.06 },
-    { x: TABLE.x + 10, y: TABLE.y - 28, r: 0.05 },
-    { x: TABLE.x + 80, y: TABLE.y - 18, r: 0.12 },
-    { x: TABLE.x - 20, y: TABLE.y - 34, r: 0.02 },
-    { x: TABLE.x + 50, y: TABLE.y - 32, r: 0.08 },
+    { x: TABLE.x - 80, y: TABLE.y - 22, r: -0.08 },
+    { x: TABLE.x - 10, y: TABLE.y - 30, r: 0.04 },
+    { x: TABLE.x + 60, y: TABLE.y - 18, r: 0.1 },
+    { x: TABLE.x + 20, y: TABLE.y - 34, r: 0.06 },
+    { x: TABLE.x - 45, y: TABLE.y - 12, r: -0.02 },
   ];
 
-  let finished = false;
-
   const cleanup = () => {
-    scene.tweens.killTweensOf([student, student.heldPapers, nameTag, ...deliveredPapers]);
-    overlay.destroy();
-    classroom.root.destroy();
-    student.destroy();
-    nameTag.destroy();
-    status.destroy();
-    deliveredPapers.forEach((p) => p.destroy());
+    timers.forEach((id) => window.clearTimeout(id));
+    scene.tweens.killTweensOf([student, student.heldPapers, nameTag, status, ...deliveredPapers]);
+    layer.destroy();
   };
 
   const finish = () => {
@@ -153,64 +159,61 @@ export function playStudentApproach(scene, {
     onComplete?.();
   };
 
+  const dropPapers = () => {
+    status.setText("Placing exam papers...");
+    student.heldPapers.setAlpha(0);
+
+    paperTargets.forEach((target, index) => {
+      schedule(() => {
+        if (finished) return;
+        const startX = student.x + 30;
+        const startY = student.y - 40;
+        const paper = drawPaper(scene, 0, 0, 0);
+        paper.setPosition(startX, startY);
+        layer.add(paper);
+        deliveredPapers.push(paper);
+        scene.tweens.add({
+          targets: paper,
+          x: target.x,
+          y: target.y,
+          rotation: target.r,
+          duration: 380,
+          ease: "Back.easeOut",
+        });
+      }, index * 140);
+    });
+  };
+
   scene.tweens.add({
     targets: student,
-    x: TABLE.x + 180,
-    duration: 900,
+    x: TABLE.x + 200,
+    duration: 1400,
     ease: "Sine.easeInOut",
     onComplete: () => {
-      status.setText("Placing exam papers...");
-      scene.tweens.add({
-        targets: student.heldPapers,
-        alpha: 0,
-        scaleX: 0.6,
-        scaleY: 0.6,
-        duration: 220,
-        onComplete: () => {
-          paperTargets.forEach((target, index) => {
-            scene.time.delayedCall(index * 70, () => {
-              if (finished) return;
-              const paper = drawPaper(scene, student.x + 20, student.y - 20, 0);
-              paper.setDepth(depth + 2);
-              deliveredPapers.push(paper);
-              scene.tweens.add({
-                targets: paper,
-                x: target.x,
-                y: target.y,
-                rotation: target.r,
-                duration: 260,
-                ease: "Back.easeOut",
-              });
-            });
-          });
+      dropPapers();
+      schedule(() => {
+        if (finished) return;
+        const subtitle = major ? ` (${major})` : "";
+        nameTag.setText(`${studentName}${subtitle}`);
+        nameTag.setAlpha(1);
+        status.setText("Papers delivered!");
+      }, 900);
 
-          scene.time.delayedCall(500, () => {
-            if (finished) return;
-            const subtitle = major ? `\n${major}` : "";
-            nameTag.setText(`${studentName}${subtitle}`);
-            scene.tweens.add({ targets: nameTag, alpha: 1, duration: 200 });
-            status.setText("Ready for grading.");
-
-            scene.time.delayedCall(500, () => {
-              if (finished) return;
-              scene.tweens.add({
-                targets: student,
-                x: -180,
-                alpha: 0.6,
-                duration: 700,
-                ease: "Sine.easeIn",
-                onComplete: finish,
-              });
-            });
-          });
-        },
-      });
+      schedule(() => {
+        if (finished) return;
+        scene.tweens.add({
+          targets: student,
+          x: -160,
+          alpha: 0.5,
+          duration: 1000,
+          ease: "Sine.easeIn",
+          onComplete: finish,
+        });
+      }, 1800);
     },
   });
 
-  // Failsafe: never leave the quiz stuck behind the intro overlay.
-  scene.time.delayedCall(3200, finish);
-  window.setTimeout(finish, 3400);
+  schedule(finish, 6000);
 
-  return { overlay, classroom, student, nameTag, status, finish };
+  return { layer, student, finish };
 }

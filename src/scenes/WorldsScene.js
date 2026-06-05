@@ -1,5 +1,6 @@
 import Phaser from "phaser";
-import { drawClassroom } from "../game/classroomVisuals";
+import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
+import { loadRandomStudent } from "../game/dbLoader";
 import {
   loadProgress,
 } from "../game/progressStore";
@@ -20,7 +21,7 @@ export class WorldsScene extends Phaser.Scene {
     this.progress = loadProgress();
     const cx = this.scale.width / 2;
     const cy = this.scale.height / 2;
-    drawClassroom(this, { depth: 0, paperCount: 3 });
+    this.classroom = drawClassroom(this, { depth: 0, paperCount: 3 });
 
     // Centered vertical stack
     const logoH = 190;
@@ -56,11 +57,43 @@ export class WorldsScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     const buttonY = panelY + panelH / 2 + gapB + buttonH / 2;
-    this.createMainButton(cx, buttonY, "START EXAM", () => {
-      this.scene.start("QuizScene");
+    const startButton = this.createMainButton(cx, buttonY, "START EXAM", () => {
+      this.startExam();
     });
+    startButton.bg.setDepth(10);
+    startButton.label.setDepth(11);
 
     // Minimal start screen.
+  }
+
+  async startExam() {
+    if (this.startingExam) return;
+    this.startingExam = true;
+
+    try {
+      const student = await loadRandomStudent();
+      this.children.list.forEach((child) => {
+        if (child !== this.classroom?.root) child.setVisible(false);
+      });
+
+      playStudentApproach(this, {
+        studentName: student.name,
+        major: student.major,
+        depth: 30,
+        onComplete: () => {
+          this.scene.start("QuizScene", { student });
+        },
+      });
+    } catch (error) {
+      this.startingExam = false;
+      this.add.text(540, 1700, `Could not load student: ${error.message}`, {
+        fontFamily: "Arial",
+        fontSize: "28px",
+        color: "#dc2626",
+        align: "center",
+        wordWrap: { width: 900 },
+      }).setOrigin(0.5).setDepth(40);
+    }
   }
 
   createRoundedPanel(x, y, width, height) {
@@ -82,12 +115,13 @@ export class WorldsScene extends Phaser.Scene {
     const bg = this.add.rectangle(x, y, 620, 150, 0x2b9f89, 1)
       .setStrokeStyle(0, 0, 0)
       .setInteractive({ useHandCursor: true });
-    this.add.text(x, y, label, {
+    const text = this.add.text(x, y, label, {
       fontFamily: "Arial",
       fontSize: "64px",
       fontStyle: "bold",
       color: "#ffffff",
     }).setOrigin(0.5);
     bg.on("pointerdown", onClick);
+    return { bg, label: text };
   }
 }
