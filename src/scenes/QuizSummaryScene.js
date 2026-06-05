@@ -2,14 +2,7 @@ import Phaser from "phaser";
 import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { loadRandomStudent } from "../game/dbLoader";
 import { happytime } from "../game/crazyGamesSdk";
-
-function gradeFromCorrectCount(correctCount) {
-  if (correctCount >= 5) return "A";
-  if (correctCount === 4) return "B";
-  if (correctCount === 3) return "C";
-  if (correctCount === 2) return "D";
-  return "F";
-}
+import { gradeFromCorrectCount } from "../game/grades";
 
 export class QuizSummaryScene extends Phaser.Scene {
   constructor() {
@@ -18,6 +11,7 @@ export class QuizSummaryScene extends Phaser.Scene {
 
   init(data) {
     this.studentName = data?.studentName || "Student";
+    this.studentMajor = data?.studentMajor || "";
     this.correctCount = Number.isFinite(data?.correctCount) ? data.correctCount : 0;
     this.total = Number.isFinite(data?.total) ? data.total : 5;
   }

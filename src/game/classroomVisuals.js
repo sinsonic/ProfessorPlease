@@ -217,3 +217,64 @@ export function playStudentApproach(scene, {
 
   return { layer, student, finish };
 }
+
+export function createProfessorFigure(scene) {
+  const professor = scene.add.container(0, 0);
+
+  const shadow = scene.add.ellipse(0, 88, 120, 30, 0x000000, 0.16);
+  const legs = scene.add.rectangle(0, 58, 60, 54, 0x1e293b);
+  const body = scene.add.rectangle(0, 4, 82, 96, 0x78350f);
+  const tie = scene.add.rectangle(0, 18, 18, 70, 0xb91c1c);
+  const armL = scene.add.rectangle(-48, 14, 24, 68, 0x92400e).setRotation(0.15);
+  const armR = scene.add.rectangle(48, 14, 24, 68, 0x92400e).setRotation(-0.15);
+  const head = scene.add.circle(0, -56, 36, 0xfcd9b6).setStrokeStyle(3, 0xd4a574);
+  const hair = scene.add.rectangle(0, -82, 64, 24, 0x9ca3af);
+  const glasses = scene.add.rectangle(0, -58, 52, 16, 0x1e293b, 0).setStrokeStyle(3, 0x1e293b);
+  const eyeL = scene.add.circle(-14, -58, 4, 0x1e293b);
+  const eyeR = scene.add.circle(14, -58, 4, 0x1e293b);
+
+  professor.add([shadow, legs, body, tie, armL, armR, head, hair, glasses, eyeL, eyeR]);
+  return professor;
+}
+
+export function createBribeEnvelope(scene, parent = null) {
+  const envelope = scene.add.container(0, 0);
+  const body = scene.add.rectangle(0, 0, 72, 48, 0xd97706).setStrokeStyle(2, 0xb45309);
+  const flap = scene.add.triangle(0, -18, -36, 0, 36, 0, 0, -22, 0xfbbf24).setStrokeStyle(2, 0xb45309);
+  const mark = scene.add.text(0, 2, "$", {
+    fontFamily: "Arial",
+    fontSize: "28px",
+    fontStyle: "bold",
+    color: "#fffbeb",
+  }).setOrigin(0.5);
+  envelope.add([body, flap, mark]);
+  if (parent) parent.add(envelope);
+  return envelope;
+}
+
+export function createSpeechBubble(scene, x, y, text, { width = 760, tail = "left" } = {}) {
+  const bubble = scene.add.container(x, y);
+  const bg = scene.add.graphics();
+  const h = 140;
+  const w = width;
+  bg.fillStyle(0xfffdf7, 1);
+  bg.lineStyle(3, 0x1e2b57, 0.15);
+  bg.fillRoundedRect(-w / 2, -h / 2, w, h, 18);
+  bg.strokeRoundedRect(-w / 2, -h / 2, w, h, 18);
+  if (tail === "left") {
+    bg.fillTriangle(-w / 2 + 40, h / 2, -w / 2 + 90, h / 2, -w / 2 + 30, h / 2 + 36);
+  } else {
+    bg.fillTriangle(w / 2 - 40, h / 2, w / 2 - 90, h / 2, w / 2 - 30, h / 2 + 36);
+  }
+  const label = scene.add.text(0, -8, text, {
+    fontFamily: "Arial",
+    fontSize: "28px",
+    color: "#1e2b57",
+    align: "center",
+    wordWrap: { width: w - 48 },
+  }).setOrigin(0.5);
+  bubble.add([bg, label]);
+  bubble.label = label;
+  bubble.setAlpha(0);
+  return bubble;
+}

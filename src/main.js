@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import "./styles.css";
+import { SpecialScene } from "./scenes/SpecialScene";
 import { QuizScene } from "./scenes/QuizScene";
 import { QuizSummaryScene } from "./scenes/QuizSummaryScene";
 import { WorldsScene } from "./scenes/WorldsScene";
@@ -15,7 +16,7 @@ const gameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [WorldsScene, QuizScene, QuizSummaryScene],
+  scene: [WorldsScene, QuizScene, QuizSummaryScene, SpecialScene],
 };
 
 initCrazyGames();

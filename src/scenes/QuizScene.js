@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { loadRandomStudent } from "../game/dbLoader";
 import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { gameplayStart, gameplayStop } from "../game/crazyGamesSdk";
+import { goToExamResult } from "../game/examResultFlow";
 
 const STATEMENTS_PER_STUDENT = 5;
 
@@ -793,8 +794,9 @@ export class QuizScene extends Phaser.Scene {
 
   showResult() {
     gameplayStop();
-    this.scene.start("QuizSummaryScene", {
+    goToExamResult(this, {
       studentName: this.student?.name || "Student",
+      studentMajor: this.student?.major || "",
       correctCount: this.correctCount,
       total: STATEMENTS_PER_STUDENT,
     });
