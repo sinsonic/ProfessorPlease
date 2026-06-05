@@ -9,7 +9,12 @@ export async function initCrazyGames() {
   const sdk = getSdk();
   if (!sdk || initialized) return;
   try {
-    await sdk.SDK.init();
+    await Promise.race([
+      sdk.SDK.init(),
+      new Promise((_, reject) => {
+        setTimeout(() => reject(new Error("CrazyGames SDK init timeout")), 3000);
+      }),
+    ]);
     initialized = true;
   } catch (error) {
     console.warn("CrazyGames SDK init failed:", error);

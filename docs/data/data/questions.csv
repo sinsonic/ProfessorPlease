@@ -1,0 +1,11 @@
+statement,isTrue,difficulty,explanation
+"Bananas are naturally radioactive.",True,1,"Bananas contain potassium, including a small amount of the radioactive isotope potassium‑40. The level is harmless, but measurable."
+"The Great Wall of China is visible from the Moon with the naked eye.",False,1,"From the Moon, individual human structures are not visible without aid. Even from low Earth orbit it’s very hard to see with the naked eye."
+"A day on Venus is longer than a year on Venus.",True,2,"Venus rotates very slowly: one rotation takes about 243 Earth days, while one orbit around the Sun takes about 225 Earth days."
+"Lightning never strikes the same place twice.",False,1,"Lightning can and does strike the same place repeatedly—tall structures like skyscrapers and towers are hit many times."
+"Octopuses have three hearts.",True,2,"Two hearts pump blood to the gills, and one pumps it to the rest of the body."
+"Humans use only 10% of their brains.",False,1,"Brain imaging shows we use many areas of the brain across a normal day; there is no 'unused 90%'."
+"Goldfish have a memory that lasts only three seconds.",False,1,"Goldfish can learn and remember tasks for weeks or months in experiments."
+"The Eiffel Tower can be about 15 cm taller during hot days.",True,2,"Metal expands with heat; the tower’s height increases slightly in warm temperatures due to thermal expansion."
+"Water conducts electricity well in its pure form.",False,2,"Pure water is a poor conductor; electricity in everyday water mainly flows because of dissolved ions (salts/minerals)."
+"Some metals can 'remember' their original shape after being bent.",True,3,"Shape‑memory alloys (like Nitinol) can return to a preset shape when heated due to a reversible change in crystal structure."

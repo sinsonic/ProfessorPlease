@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { loadRandomStudent } from "../game/dbLoader";
-import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
+import { drawClassroom } from "../game/classroomVisuals";
 import { gameplayStart, gameplayStop } from "../game/crazyGamesSdk";
 
 const STATEMENTS_PER_STUDENT = 5;
@@ -19,54 +19,60 @@ export class QuizScene extends Phaser.Scene {
     this.statements = [];
     this.currentIndex = 0;
     this.correctCount = 0;
-    this.examStarted = false;
   }
 
-  async create() {
+  create() {
     this.cameras.main.setBackgroundColor("#e9dcc8");
     gameplayStart();
 
     this.createBackground();
     this.createHud();
-    this.setQuizUiVisible(false);
+    this.statusText.setText("Loading student...");
 
-    try {
-      this.student = await loadRandomStudent();
-      this.statements = this.student?.statements || [];
-      if (!Array.isArray(this.statements) || this.statements.length !== STATEMENTS_PER_STUDENT) {
-        this.renderError("No student statements found.");
-        return;
-      }
-      this.statusText.setText("A student is on the way...");
-      const beginExam = () => {
-        if (this.examStarted) return;
-        this.examStarted = true;
-        this.setQuizUiVisible(true);
-        this.renderQuestion();
-      };
-      playStudentApproach(this, {
-        studentName: this.student.name,
-        major: this.student.major,
-        depth: 8,
-        onComplete: beginExam,
+    loadRandomStudent()
+      .then((student) => {
+        if (!this.sys?.isActive()) return;
+        this.student = student;
+        this.statements = student?.statements || [];
+        if (!Array.isArray(this.statements) || this.statements.length !== STATEMENTS_PER_STUDENT) {
+          this.renderError("No student statements found.");
+          return;
+        }
+        this.showStudentArrivalBanner();
+        try {
+          this.renderQuestion();
+        } catch (error) {
+          this.renderError(`Failed to start exam: ${error.message}`);
+        }
+      })
+      .catch((error) => {
+        if (!this.sys?.isActive()) return;
+        this.renderError(`Failed to load students: ${error.message}`);
       });
-    } catch (error) {
-      this.renderError(`Failed to load students: ${error.message}`);
-    }
   }
 
-  setQuizUiVisible(visible) {
-    const alpha = visible ? 1 : 0;
-    this.streakText?.setAlpha(alpha);
-    this.scoreText?.setAlpha(alpha);
-    this.statusText?.setAlpha(alpha);
-    if (this.questionContainer) {
-      this.questionContainer.setVisible(visible);
-    }
+  showStudentArrivalBanner() {
+    const major = this.student?.major ? ` (${this.student.major})` : "";
+    const banner = this.add.text(540, 190, `${this.student.name}${major} brought exam papers`, {
+      fontFamily: "Arial",
+      fontSize: "34px",
+      fontStyle: "bold",
+      color: "#1e2b57",
+      align: "center",
+      wordWrap: { width: 900 },
+    }).setOrigin(0.5).setDepth(30);
+
+    this.tweens.add({
+      targets: banner,
+      alpha: 0,
+      y: 150,
+      delay: 900,
+      duration: 350,
+      onComplete: () => banner.destroy(),
+    });
   }
 
   renderError(message) {
-    this.setQuizUiVisible(true);
     this.add
       .text(this.scale.width / 2, this.scale.height / 2, message, {
         fontFamily: "Arial",
