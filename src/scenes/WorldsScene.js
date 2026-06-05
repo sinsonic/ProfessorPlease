@@ -3,6 +3,7 @@ import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { loadRandomStudent } from "../game/dbLoader";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { activatePendingBoosters, loadCareer, STUDENTS_PER_DAY } from "../game/careerStore";
+import { createHiddenObjectButton } from "../game/hiddenObjectAccess";
 import { createShopIcon } from "../game/shopAccess";
 import {
   loadProgress,
@@ -78,6 +79,7 @@ export class WorldsScene extends Phaser.Scene {
     startButton.bg.setDepth(10);
     startButton.label.setDepth(11);
 
+    createHiddenObjectButton(this, { depth: 60 });
     createShopIcon(this, { depth: 60 });
   }
 

@@ -5,6 +5,7 @@ import { ShopScene } from "./scenes/ShopScene";
 import { SpecialScene } from "./scenes/SpecialScene";
 import { QuizScene } from "./scenes/QuizScene";
 import { QuizSummaryScene } from "./scenes/QuizSummaryScene";
+import { HiddenObjectScene } from "./scenes/HiddenObjectScene";
 import { WorldsScene } from "./scenes/WorldsScene";
 import { initCrazyGames } from "./game/crazyGamesSdk";
 
@@ -18,7 +19,7 @@ const gameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [WorldsScene, QuizScene, QuizSummaryScene, SpecialScene, DayEndScene, ShopScene],
+  scene: [WorldsScene, QuizScene, QuizSummaryScene, SpecialScene, DayEndScene, ShopScene, HiddenObjectScene],
 };
 
 initCrazyGames();
