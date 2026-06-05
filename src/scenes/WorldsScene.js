@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { loadRandomStudent } from "../game/dbLoader";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
-import { loadCareer, STUDENTS_PER_DAY } from "../game/careerStore";
+import { activatePendingBoosters, loadCareer, STUDENTS_PER_DAY } from "../game/careerStore";
 import {
   loadProgress,
 } from "../game/progressStore";
@@ -90,6 +90,10 @@ export class WorldsScene extends Phaser.Scene {
     }
 
     try {
+      activatePendingBoosters();
+      this.career = loadCareer();
+      updateCareerHud(this.careerHud, this.career);
+
       const student = await loadRandomStudent();
       this.children.list.forEach((child) => {
         if (child !== this.classroom?.root) child.setVisible(false);

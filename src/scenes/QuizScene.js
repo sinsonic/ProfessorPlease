@@ -3,7 +3,7 @@ import { loadRandomStudent } from "../game/dbLoader";
 import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { gameplayStart, gameplayStop } from "../game/crazyGamesSdk";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
-import { adjustReputation, recordStudentGraded } from "../game/careerStore";
+import { adjustReputationForAnswer, recordStudentGraded } from "../game/careerStore";
 import { goToExamResult } from "../game/examResultFlow";
 
 const STATEMENTS_PER_STUDENT = 5;
@@ -337,7 +337,7 @@ export class QuizScene extends Phaser.Scene {
     if (isCorrect) {
       this.correctCount += 1;
     }
-    const career = adjustReputation(isCorrect ? 1 : -1);
+    const career = adjustReputationForAnswer(isCorrect);
     updateCareerHud(this.careerHud, career);
     return isCorrect;
   }

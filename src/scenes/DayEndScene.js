@@ -79,8 +79,16 @@ export class DayEndScene extends Phaser.Scene {
         color: "#1e2b57",
       }).setOrigin(0.5);
 
-      this.createButton(cx, cy + 320, `START DAY ${result.career.day}`, () => {
-        this.scene.start("WorldsScene");
+      if (result.salaryMultiplier > 1) {
+        this.add.text(cx, cy + 270, `Booster bonus applied (${Math.round(result.salaryMultiplier * 100)}%)`, {
+          fontFamily: "Arial",
+          fontSize: "24px",
+          color: "#2b9f89",
+        }).setOrigin(0.5);
+      }
+
+      this.createButton(cx, cy + 340, "VISIT SHOP", () => {
+        this.scene.start("ShopScene", { nextDay: result.career.day });
       }, 640, 140, 52, true);
     } catch (error) {
       loading.setText(`Payday error: ${error.message}`);

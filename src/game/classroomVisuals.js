@@ -1,3 +1,5 @@
+import { drawOwnedDecorations } from "./classroomDecorations";
+
 export const TABLE = { x: 540, y: 1540, width: 720, height: 120 };
 
 function drawPaper(scene, x, y, rotation = 0, alpha = 1, parent = null) {
@@ -71,6 +73,8 @@ export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
     chair,
     ...papers,
   ]);
+
+  drawOwnedDecorations(scene, root);
 
   return { root, table: TABLE, papers };
 }

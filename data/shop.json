@@ -1,0 +1,89 @@
+{
+  "currency": "$",
+  "items": [
+    {
+      "id": "desk_plant",
+      "type": "decoration",
+      "name": "Desk Plant",
+      "description": "A leafy fern that makes the office feel alive.",
+      "price": 80,
+      "decorationKey": "desk_plant"
+    },
+    {
+      "id": "wall_diploma",
+      "type": "decoration",
+      "name": "Framed Diploma",
+      "description": "Hang your credentials with pride on the back wall.",
+      "price": 150,
+      "decorationKey": "wall_diploma"
+    },
+    {
+      "id": "desk_lamp",
+      "type": "decoration",
+      "name": "Brass Desk Lamp",
+      "description": "Warm light for late-night grading sessions.",
+      "price": 100,
+      "decorationKey": "desk_lamp"
+    },
+    {
+      "id": "floor_rug",
+      "type": "decoration",
+      "name": "Persian Rug",
+      "description": "Softens the floor and impresses visiting faculty.",
+      "price": 200,
+      "decorationKey": "floor_rug"
+    },
+    {
+      "id": "gold_trophy",
+      "type": "decoration",
+      "name": "Teaching Trophy",
+      "description": "A shiny award displayed on your desk.",
+      "price": 350,
+      "decorationKey": "gold_trophy"
+    },
+    {
+      "id": "motivational_poster",
+      "type": "decoration",
+      "name": "Motivational Poster",
+      "description": "READ MORE BOOKS — in bold, inspiring letters.",
+      "price": 60,
+      "decorationKey": "motivational_poster"
+    },
+    {
+      "id": "rep_charm",
+      "type": "booster",
+      "name": "Reputation Charm",
+      "description": "+1 bonus reputation on every correct grade next work day.",
+      "price": 120,
+      "boosterEffect": "rep_bonus",
+      "boosterValue": 1
+    },
+    {
+      "id": "salary_boost",
+      "type": "booster",
+      "name": "Salary Negotiator",
+      "description": "+25% salary on your next payday.",
+      "price": 180,
+      "boosterEffect": "salary_multiplier",
+      "boosterValue": 1.25
+    },
+    {
+      "id": "mistake_shield",
+      "type": "booster",
+      "name": "Mistake Shield",
+      "description": "Your first wrong grade next work day costs no reputation.",
+      "price": 150,
+      "boosterEffect": "mistake_shield",
+      "boosterValue": 1
+    },
+    {
+      "id": "coffee_stash",
+      "type": "booster",
+      "name": "Coffee Stash",
+      "description": "Receive $50 bonus cash when the next work day begins.",
+      "price": 90,
+      "boosterEffect": "day_start_money",
+      "boosterValue": 50
+    }
+  ]
+}
