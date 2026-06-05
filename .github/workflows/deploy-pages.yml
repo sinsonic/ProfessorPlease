@@ -36,12 +36,7 @@ jobs:
           cp -r dist/assets docs/assets
           cp -r dist/data docs/data
           touch docs/.nojekyll
+          git add -A docs assets data index.html
+          git diff --staged --quiet || git commit -m "Deploy GitHub Pages build [skip ci]"
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Deploy GitHub Pages build [skip ci]"
-          file_pattern: |
-            docs/**
-            assets/**
-            data/**
-            index.html
+      - run: git push
