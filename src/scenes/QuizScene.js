@@ -19,6 +19,7 @@ export class QuizScene extends Phaser.Scene {
     this.statements = [];
     this.currentIndex = 0;
     this.correctCount = 0;
+    this.examStarted = false;
   }
 
   async create() {
@@ -37,14 +38,17 @@ export class QuizScene extends Phaser.Scene {
         return;
       }
       this.statusText.setText("A student is on the way...");
+      const beginExam = () => {
+        if (this.examStarted) return;
+        this.examStarted = true;
+        this.setQuizUiVisible(true);
+        this.renderQuestion();
+      };
       playStudentApproach(this, {
         studentName: this.student.name,
         major: this.student.major,
         depth: 8,
-        onComplete: () => {
-          this.setQuizUiVisible(true);
-          this.renderQuestion();
-        },
+        onComplete: beginExam,
       });
     } catch (error) {
       this.renderError(`Failed to load students: ${error.message}`);
@@ -62,6 +66,7 @@ export class QuizScene extends Phaser.Scene {
   }
 
   renderError(message) {
+    this.setQuizUiVisible(true);
     this.add
       .text(this.scale.width / 2, this.scale.height / 2, message, {
         fontFamily: "Arial",

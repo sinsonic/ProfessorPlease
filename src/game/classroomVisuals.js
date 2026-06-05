@@ -134,7 +134,10 @@ export function playStudentApproach(scene, {
     { x: TABLE.x + 50, y: TABLE.y - 32, r: 0.08 },
   ];
 
+  let finished = false;
+
   const cleanup = () => {
+    scene.tweens.killTweensOf([student, student.heldPapers, nameTag, ...deliveredPapers]);
     overlay.destroy();
     classroom.root.destroy();
     student.destroy();
@@ -144,6 +147,8 @@ export function playStudentApproach(scene, {
   };
 
   const finish = () => {
+    if (finished) return;
+    finished = true;
     cleanup();
     onComplete?.();
   };
@@ -151,18 +156,20 @@ export function playStudentApproach(scene, {
   scene.tweens.add({
     targets: student,
     x: TABLE.x + 180,
-    duration: 1100,
+    duration: 900,
     ease: "Sine.easeInOut",
     onComplete: () => {
       status.setText("Placing exam papers...");
       scene.tweens.add({
         targets: student.heldPapers,
         alpha: 0,
-        scale: 0.6,
-        duration: 280,
+        scaleX: 0.6,
+        scaleY: 0.6,
+        duration: 220,
         onComplete: () => {
           paperTargets.forEach((target, index) => {
-            scene.time.delayedCall(index * 90, () => {
+            scene.time.delayedCall(index * 70, () => {
+              if (finished) return;
               const paper = drawPaper(scene, student.x + 20, student.y - 20, 0);
               paper.setDepth(depth + 2);
               deliveredPapers.push(paper);
@@ -171,24 +178,26 @@ export function playStudentApproach(scene, {
                 x: target.x,
                 y: target.y,
                 rotation: target.r,
-                duration: 320,
+                duration: 260,
                 ease: "Back.easeOut",
               });
             });
           });
 
-          scene.time.delayedCall(620, () => {
+          scene.time.delayedCall(500, () => {
+            if (finished) return;
             const subtitle = major ? `\n${major}` : "";
             nameTag.setText(`${studentName}${subtitle}`);
-            scene.tweens.add({ targets: nameTag, alpha: 1, duration: 260 });
+            scene.tweens.add({ targets: nameTag, alpha: 1, duration: 200 });
             status.setText("Ready for grading.");
 
-            scene.time.delayedCall(900, () => {
+            scene.time.delayedCall(500, () => {
+              if (finished) return;
               scene.tweens.add({
                 targets: student,
                 x: -180,
                 alpha: 0.6,
-                duration: 900,
+                duration: 700,
                 ease: "Sine.easeIn",
                 onComplete: finish,
               });
@@ -199,5 +208,8 @@ export function playStudentApproach(scene, {
     },
   });
 
-  return { overlay, classroom, student, nameTag, status };
+  // Failsafe: never leave the quiz stuck behind the intro overlay.
+  scene.time.delayedCall(3200, finish);
+
+  return { overlay, classroom, student, nameTag, status, finish };
 }
