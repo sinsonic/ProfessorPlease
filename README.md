@@ -1,33 +1,36 @@
-# CrazyGames HTML Version
+# Professor, Please!
 
-This folder is a separate project for rebuilding the game as an HTML5 web game for CrazyGames.
-
-## Goal
-
-- Keep the original mobile app in `app/` untouched.
-- Build a browser-compatible game in this folder.
-- Prepare for CrazyGames web deployment.
-
-## Structure
-
-- `index.html` - game entry page
-- `src/main.js` - game bootstrap logic
-- `src/styles.css` - basic styling
+HTML5 quiz game built with Phaser and Vite.
 
 ## Run locally
 
-You can open `index.html` directly in a browser for now, or serve it locally:
-
 ```bash
-cd crazygames-html
-python3 -m http.server 8080
+npm install
+npm run dev
 ```
 
-Then open [http://localhost:8080](http://localhost:8080).
+Production-like preview:
 
-## Next migration steps
+```bash
+npm run build
+npm run preview
+```
 
-1. Define core gameplay loop in `src/main.js`.
-2. Move quiz/world data into web-friendly JSON.
-3. Add input handling for mouse/touch.
-4. Integrate CrazyGames SDK events (ads, gameplay start/stop).
+## GitHub Pages
+
+The live site must serve the **built** `dist/` output (not raw `src/`).
+
+1. Push to `main` — the GitHub Action builds and publishes to the `gh-pages` branch.
+2. In repo **Settings → Pages**:
+   - **Source:** Deploy from a branch
+   - **Branch:** `gh-pages` / `(root)`
+   - **Custom domain:** leave empty (do not put `sinsonic.github.io/ProfessorPlease/` here)
+3. Open https://sinsonic.github.io/ProfessorPlease/
+
+## CrazyGames build
+
+```bash
+npm run build
+```
+
+Upload the contents of `dist/` (relative `./` asset paths).
