@@ -95,6 +95,326 @@
           "explanation": "From French/Latin roots, it literally means 'rebirth', referring to renewed interest in classical art and learning."
         }
       ]
+    },
+    {
+      "id": "student_004",
+      "name": "Emma Kowalski",
+      "major": "Biology",
+      "statements": [
+        {
+          "statement": "Honey can remain edible for thousands of years when sealed.",
+          "isCorrect": true,
+          "explanation": "Honey's low moisture and acidity inhibit bacteria; archaeologists have found edible honey in ancient tombs."
+        },
+        {
+          "statement": "Bulls charge because they hate the color red.",
+          "isCorrect": false,
+          "explanation": "Cattle have limited color vision and react mainly to movement, not the mat's color."
+        },
+        {
+          "statement": "Sharks are classified as mammals.",
+          "isCorrect": false,
+          "explanation": "Sharks are fish (cartilaginous fish), not mammals."
+        },
+        {
+          "statement": "A group of flamingos is sometimes called a flamboyance.",
+          "isCorrect": true,
+          "explanation": "Along with 'colony' and 'stand', flamboyance is a recognized collective noun for flamingos."
+        },
+        {
+          "statement": "Humans have exactly five senses and no more.",
+          "isCorrect": false,
+          "explanation": "We also sense balance, temperature, pain, body position (proprioception), and more beyond the classic five."
+        }
+      ]
+    },
+    {
+      "id": "student_005",
+      "name": "Raj Patel",
+      "major": "Chemistry",
+      "statements": [
+        {
+          "statement": "Diamond and graphite are both forms of carbon.",
+          "isCorrect": true,
+          "explanation": "They are allotropes of carbon with different crystal structures."
+        },
+        {
+          "statement": "Mixing household bleach and ammonia is safe if diluted.",
+          "isCorrect": false,
+          "explanation": "The combination produces toxic chloramine vapors and must never be mixed."
+        },
+        {
+          "statement": "Hot water can sometimes freeze faster than cold water under certain conditions.",
+          "isCorrect": true,
+          "explanation": "This is known as the Mpemba effect and has been observed in controlled experiments."
+        },
+        {
+          "statement": "The chemical symbol for gold is Go.",
+          "isCorrect": false,
+          "explanation": "Gold's symbol is Au, from the Latin word aurum."
+        },
+        {
+          "statement": "Helium is the second most abundant element in the observable universe.",
+          "isCorrect": true,
+          "explanation": "After hydrogen, helium makes up a large fraction of ordinary matter in stars and gas clouds."
+        }
+      ]
+    },
+    {
+      "id": "student_006",
+      "name": "Sofia Bergström",
+      "major": "Astronomy",
+      "statements": [
+        {
+          "statement": "The Sun is a star.",
+          "isCorrect": true,
+          "explanation": "The Sun is a G-type main-sequence star at the center of our solar system."
+        },
+        {
+          "statement": "One side of the Moon never receives any sunlight.",
+          "isCorrect": false,
+          "explanation": "The far side gets sunlight; 'dark side' means unseen from Earth, not unlit."
+        },
+        {
+          "statement": "Neptune's existence was predicted by math before it was observed.",
+          "isCorrect": true,
+          "explanation": "Urbain Le Verrier calculated its position from Uranus's orbital irregularities in 1846."
+        },
+        {
+          "statement": "Stars twinkle mainly because they are burning fuel unevenly.",
+          "isCorrect": false,
+          "explanation": "Twinkling is caused by Earth's atmosphere bending and scattering starlight."
+        },
+        {
+          "statement": "A light-year measures distance, not time.",
+          "isCorrect": true,
+          "explanation": "It is the distance light travels in one year, roughly 9.46 trillion kilometers."
+        }
+      ]
+    },
+    {
+      "id": "student_007",
+      "name": "James Okafor",
+      "major": "Geography",
+      "statements": [
+        {
+          "statement": "Antarctica qualifies as a desert.",
+          "isCorrect": true,
+          "explanation": "Deserts are defined by low precipitation; Antarctica is the driest continent."
+        },
+        {
+          "statement": "Mauna Kea is taller than Mount Everest when measured from base to peak.",
+          "isCorrect": true,
+          "explanation": "Much of Mauna Kea lies below sea level; its total height exceeds Everest's."
+        },
+        {
+          "statement": "Russia spans 11 time zones.",
+          "isCorrect": true,
+          "explanation": "Russia's vast east-west extent covers 11 of the world's time zones."
+        },
+        {
+          "statement": "The Sahara is the largest desert of any kind on Earth.",
+          "isCorrect": false,
+          "explanation": "Antarctica is the largest desert overall; Sahara is the largest hot desert."
+        },
+        {
+          "statement": "Iceland is covered mostly in ice because of its name.",
+          "isCorrect": false,
+          "explanation": "Iceland's name is historical; much of Greenland, not Iceland, is ice-covered."
+        }
+      ]
+    },
+    {
+      "id": "student_008",
+      "name": "Yuki Tanaka",
+      "major": "Psychology",
+      "statements": [
+        {
+          "statement": "False memories can feel as vivid as real ones.",
+          "isCorrect": true,
+          "explanation": "Memory research shows people can confidently recall events that never happened."
+        },
+        {
+          "statement": "Identical twins always have identical fingerprints.",
+          "isCorrect": false,
+          "explanation": "Fingerprints form from unique womb conditions, so twins' prints differ."
+        },
+        {
+          "statement": "Facial expressions can influence how you feel.",
+          "isCorrect": true,
+          "explanation": "The facial feedback hypothesis suggests expression can affect emotional experience."
+        },
+        {
+          "statement": "People are either left-brained or right-brained in a fixed way.",
+          "isCorrect": false,
+          "explanation": "Both hemispheres work together; the strict split is a popular myth."
+        },
+        {
+          "statement": "Scientists agree on one proven cause of déjà vu.",
+          "isCorrect": false,
+          "explanation": "Several theories exist, but déjà vu is not fully explained by a single mechanism."
+        }
+      ]
+    },
+    {
+      "id": "student_009",
+      "name": "Carlos Mendez",
+      "major": "Engineering",
+      "statements": [
+        {
+          "statement": "The Tacoma Narrows Bridge collapsed partly due to wind-induced vibrations.",
+          "isCorrect": true,
+          "explanation": "Aeroelastic flutter in 1940 caused catastrophic oscillations and collapse."
+        },
+        {
+          "statement": "Window glass flows downward slowly over centuries like a liquid.",
+          "isCorrect": false,
+          "explanation": "Old glass thickness variations come from manufacturing, not gravity flow; glass is an amorphous solid."
+        },
+        {
+          "statement": "The microwave oven was invented after a melted candy bar accident.",
+          "isCorrect": true,
+          "explanation": "Percy Spencer noticed a chocolate bar melted near radar equipment in 1945."
+        },
+        {
+          "statement": "Concrete keeps getting stronger for a short time after it is poured.",
+          "isCorrect": true,
+          "explanation": "Hydration continues for years, though most strength gain happens in the first weeks."
+        },
+        {
+          "statement": "All metals conduct electricity equally well.",
+          "isCorrect": false,
+          "explanation": "Conductivity varies widely; silver and copper conduct far better than many others."
+        }
+      ]
+    },
+    {
+      "id": "student_010",
+      "name": "Ingrid Holm",
+      "major": "Medicine",
+      "statements": [
+        {
+          "statement": "Antibiotics treat bacterial infections, not typical colds caused by viruses.",
+          "isCorrect": true,
+          "explanation": "Common colds are viral; antibiotics target bacteria and do not cure them."
+        },
+        {
+          "statement": "An adult human skeleton usually has 206 bones.",
+          "isCorrect": true,
+          "explanation": "Babies have more bones; many fuse as we grow, leaving about 206 in adulthood."
+        },
+        {
+          "statement": "You should tilt your head back during a nosebleed.",
+          "isCorrect": false,
+          "explanation": "Leaning slightly forward and pinching the nose is recommended to avoid swallowing blood."
+        },
+        {
+          "statement": "Vaccines can train the immune system without causing the full disease.",
+          "isCorrect": true,
+          "explanation": "They expose the body to weakened, inactivated, or partial pathogens to build immunity."
+        },
+        {
+          "statement": "Hair and fingernails continue growing after death.",
+          "isCorrect": false,
+          "explanation": "Skin dehydrates and retracts, making nails and hair appear longer; cells are not actively growing."
+        }
+      ]
+    },
+    {
+      "id": "student_011",
+      "name": "Liam O'Connor",
+      "major": "Literature",
+      "statements": [
+        {
+          "statement": "William Shakespeare coined or popularized many English words.",
+          "isCorrect": true,
+          "explanation": "His plays introduced or popularized hundreds of words and phrases still used today."
+        },
+        {
+          "statement": "Mary Shelley wrote Frankenstein when she was still a teenager.",
+          "isCorrect": true,
+          "explanation": "She began the novel around age 18; it was published when she was 20."
+        },
+        {
+          "statement": "Sherlock Holmes says 'Elementary, my dear Watson' in the original stories.",
+          "isCorrect": false,
+          "explanation": "Holmes says 'elementary' and 'my dear Watson' separately, but never that exact combined phrase."
+        },
+        {
+          "statement": "A traditional Japanese haiku has three lines.",
+          "isCorrect": true,
+          "explanation": "Classic haiku follow a 5-7-5 syllable pattern across three lines."
+        },
+        {
+          "statement": "Homer's Odyssey was originally written in English.",
+          "isCorrect": false,
+          "explanation": "It was composed in Ancient Greek; English versions are translations."
+        }
+      ]
+    },
+    {
+      "id": "student_012",
+      "name": "Amara Diallo",
+      "major": "Economics",
+      "statements": [
+        {
+          "statement": "Every ancient society used barter before inventing money.",
+          "isCorrect": false,
+          "explanation": "Historians find credit, gifts, and complex exchange systems; universal barter-first is a myth."
+        },
+        {
+          "statement": "Inflation means every product's price rises by the same percentage.",
+          "isCorrect": false,
+          "explanation": "Inflation is a general rise in prices, but individual goods change at different rates."
+        },
+        {
+          "statement": "Bitcoin's protocol caps total supply at 21 million coins.",
+          "isCorrect": true,
+          "explanation": "The limit is built into Bitcoin's code through halving and issuance rules."
+        },
+        {
+          "statement": "A common rule of thumb defines recession as two straight quarters of falling GDP.",
+          "isCorrect": true,
+          "explanation": "Many analysts use this shorthand, though official bodies may use broader criteria."
+        },
+        {
+          "statement": "Scarcity is a fundamental concept in economics.",
+          "isCorrect": true,
+          "explanation": "Economics studies how societies allocate limited resources among competing wants."
+        }
+      ]
+    },
+    {
+      "id": "student_013",
+      "name": "Noah Weiss",
+      "major": "Mathematics",
+      "statements": [
+        {
+          "statement": "Zero is considered an even number.",
+          "isCorrect": true,
+          "explanation": "Zero is divisible by 2 with no remainder, meeting the definition of even."
+        },
+        {
+          "statement": "A pie chart is always the best chart for comparing categories.",
+          "isCorrect": false,
+          "explanation": "Pie charts are hard to read with many slices; bar charts often compare values more clearly."
+        },
+        {
+          "statement": "The interior angles of a flat triangle add up to 180 degrees.",
+          "isCorrect": true,
+          "explanation": "This is a basic result of Euclidean geometry on a plane."
+        },
+        {
+          "statement": "Infinity is an ordinary number you can plug into standard arithmetic like 5 or 10.",
+          "isCorrect": false,
+          "explanation": "Infinity is a concept, not a real number; operations with it follow special rules or are undefined."
+        },
+        {
+          "statement": "Prime numbers become less common among larger integers.",
+          "isCorrect": true,
+          "explanation": "Primes thin out as numbers grow, though there are still infinitely many primes overall."
+        }
+      ]
     }
   ]
 }

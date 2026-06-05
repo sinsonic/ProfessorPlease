@@ -1,8 +1,9 @@
 import Phaser from "phaser";
-import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
-import { loadRandomStudent } from "../game/dbLoader";
+import { drawClassroom } from "../game/classroomVisuals";
 import { happytime } from "../game/crazyGamesSdk";
+import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { gradeFromCorrectCount } from "../game/grades";
+import { continueAfterStudent, getContinueButtonLabel } from "../game/studentDayFlow";
 
 export class QuizSummaryScene extends Phaser.Scene {
   constructor() {
@@ -18,6 +19,8 @@ export class QuizSummaryScene extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor("#e9dcc8");
+    this.careerHud = createCareerHud(this, { depth: 30, top: 0 });
+    updateCareerHud(this.careerHud);
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 4 });
     const grade = gradeFromCorrectCount(this.correctCount);
     if (grade === "A") {
@@ -50,39 +53,16 @@ export class QuizSummaryScene extends Phaser.Scene {
       color: grade === "A" ? "#2b9f89" : grade === "F" ? "#dc2626" : "#64748b",
     }).setOrigin(0.5);
 
-    this.createButton(cx, cy + 190, "NEXT STUDENT", () => {
-      this.startNextStudent();
+    this.createButton(cx, cy + 190, getContinueButtonLabel(), () => {
+      this.handleContinue();
     }, 640, 140, 56, true);
   }
 
-  async startNextStudent() {
+  async handleContinue() {
     if (this.loadingNext) return;
     this.loadingNext = true;
-
-    try {
-      const student = await loadRandomStudent();
-      this.children.list.forEach((child) => {
-        if (child !== this.classroom?.root) child.setVisible(false);
-      });
-
-      playStudentApproach(this, {
-        studentName: student.name,
-        major: student.major,
-        depth: 30,
-        onComplete: () => {
-          this.scene.start("QuizScene", { student });
-        },
-      });
-    } catch (error) {
-      this.loadingNext = false;
-      this.add.text(540, 1700, `Could not load student: ${error.message}`, {
-        fontFamily: "Arial",
-        fontSize: "28px",
-        color: "#dc2626",
-        align: "center",
-        wordWrap: { width: 900 },
-      }).setOrigin(0.5).setDepth(40);
-    }
+    await continueAfterStudent(this, { classroom: this.classroom });
+    this.loadingNext = false;
   }
 
   createRoundedPanel(x, y, width, height) {

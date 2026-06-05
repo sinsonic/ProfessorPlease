@@ -1,0 +1,41 @@
+{
+  "currency": "$",
+  "tiers": [
+    {
+      "minReputation": -999,
+      "maxReputation": -20,
+      "title": "Disgraced Scholar",
+      "dailySalary": 5
+    },
+    {
+      "minReputation": -19,
+      "maxReputation": 0,
+      "title": "On Probation",
+      "dailySalary": 9
+    },
+    {
+      "minReputation": 1,
+      "maxReputation": 15,
+      "title": "Assistant Professor",
+      "dailySalary": 10
+    },
+    {
+      "minReputation": 16,
+      "maxReputation": 35,
+      "title": "Associate Professor",
+      "dailySalary": 30
+    },
+    {
+      "minReputation": 36,
+      "maxReputation": 60,
+      "title": "Department Star",
+      "dailySalary": 60
+    },
+    {
+      "minReputation": 61,
+      "maxReputation": 999,
+      "title": "Legendary Academic",
+      "dailySalary": 100
+    }
+  ]
+}

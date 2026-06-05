@@ -10,6 +10,14 @@ const VALID_PROPS = new Set(["envelope", "gift"]);
 
 let cachedScenes = null;
 
+function isValidEffectValue(value) {
+  return value == null || Number.isFinite(Number(value));
+}
+
+function normalizeEffectValue(value) {
+  return Number(value) || 0;
+}
+
 function assertValidScene(scene) {
   if (!scene || typeof scene !== "object") return false;
   if (typeof scene.id !== "string" || !scene.id.trim()) return false;
@@ -24,6 +32,8 @@ function assertValidScene(scene) {
   if (!VALID_TEMPLATES.has(scene.template)) return false;
   if (typeof scene.banner !== "string" || !scene.banner.trim()) return false;
   if (scene.prop != null && scene.prop !== "" && !VALID_PROPS.has(scene.prop)) return false;
+  if (!isValidEffectValue(scene.reputationChange)) return false;
+  if (!isValidEffectValue(scene.moneyChange)) return false;
 
   const dialogue = scene.dialogue;
   if (!dialogue || typeof dialogue !== "object") return false;
@@ -38,6 +48,8 @@ function assertValidScene(scene) {
     if (!VALID_COLORS.has(choice.color)) return false;
     if (typeof choice.outcome !== "string" || !choice.outcome.trim()) return false;
     if (choice.animation && !VALID_ANIMATIONS.has(choice.animation)) return false;
+    if (!isValidEffectValue(choice.reputationChange)) return false;
+    if (!isValidEffectValue(choice.moneyChange)) return false;
   }
 
   return true;
@@ -54,6 +66,13 @@ function normalizeScenes(data) {
     .map((scene) => ({
       ...scene,
       chance: Number(scene.chance),
+      reputationChange: normalizeEffectValue(scene.reputationChange),
+      moneyChange: normalizeEffectValue(scene.moneyChange),
+      choices: scene.choices.map((choice) => ({
+        ...choice,
+        reputationChange: normalizeEffectValue(choice.reputationChange),
+        moneyChange: normalizeEffectValue(choice.moneyChange),
+      })),
     }));
 
   if (normalized.length === 0) {
@@ -143,6 +162,25 @@ export function interpolateSceneText(template, context) {
     const value = context[key];
     return value == null ? "" : String(value);
   });
+}
+
+export function getChoiceEffects(scene, choice) {
+  return {
+    reputationChange: normalizeEffectValue(scene?.reputationChange) + normalizeEffectValue(choice?.reputationChange),
+    moneyChange: normalizeEffectValue(scene?.moneyChange) + normalizeEffectValue(choice?.moneyChange),
+  };
+}
+
+export function formatEffectSummary({ reputationChange = 0, moneyChange = 0 } = {}) {
+  const parts = [];
+  if (reputationChange !== 0) {
+    parts.push(`Reputation ${reputationChange > 0 ? "+" : ""}${reputationChange}`);
+  }
+  if (moneyChange !== 0) {
+    const sign = moneyChange > 0 ? "+" : "-";
+    parts.push(`Money ${sign}$${Math.abs(moneyChange)}`);
+  }
+  return parts.join(" | ");
 }
 
 export function buildSceneContext({

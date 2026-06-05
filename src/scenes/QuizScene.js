@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import { loadRandomStudent } from "../game/dbLoader";
 import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { gameplayStart, gameplayStop } from "../game/crazyGamesSdk";
+import { createCareerHud, updateCareerHud } from "../game/careerHud";
+import { adjustReputation, recordStudentGraded } from "../game/careerStore";
 import { goToExamResult } from "../game/examResultFlow";
 
 const STATEMENTS_PER_STUDENT = 5;
@@ -334,9 +336,9 @@ export class QuizScene extends Phaser.Scene {
     const isCorrect = value === current.isCorrect;
     if (isCorrect) {
       this.correctCount += 1;
-    } else {
-      // No lives; grade is computed from correctCount out of 5.
     }
+    const career = adjustReputation(isCorrect ? 1 : -1);
+    updateCareerHud(this.careerHud, career);
     return isCorrect;
   }
 
@@ -576,14 +578,17 @@ export class QuizScene extends Phaser.Scene {
   }
 
   createHud() {
-    this.streakText = this.add.text(26, 48, "Exam 1/5", {
+    this.careerHud = createCareerHud(this, { depth: 46, top: 0 });
+    updateCareerHud(this.careerHud);
+
+    this.streakText = this.add.text(26, 148, "Exam 1/5", {
       fontFamily: "Arial",
       fontSize: "40px",
       fontStyle: "bold",
       color: "#64748b",
     }).setOrigin(0, 0.5).setDepth(30);
 
-    this.scoreText = this.add.text(1054, 48, "Correct: 0/5", {
+    this.scoreText = this.add.text(1054, 148, "Correct: 0/5", {
       fontFamily: "Arial",
       fontSize: "34px",
       color: "#64748b",
@@ -591,7 +596,7 @@ export class QuizScene extends Phaser.Scene {
       align: "right",
     }).setOrigin(1, 0.5).setDepth(30);
     this.statusText = this.add
-      .text(this.scale.width / 2, 132, "Loading run...", {
+      .text(this.scale.width / 2, 210, "Loading run...", {
         fontFamily: "Arial",
         fontSize: "30px",
         color: "#64748b",
@@ -794,6 +799,8 @@ export class QuizScene extends Phaser.Scene {
 
   showResult() {
     gameplayStop();
+    const career = recordStudentGraded();
+    updateCareerHud(this.careerHud, career);
     goToExamResult(this, {
       studentName: this.student?.name || "Student",
       studentMajor: this.student?.major || "",

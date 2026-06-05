@@ -9,6 +9,8 @@
       "template": "confrontation",
       "banner": "Grade: {grade} — Uh oh...",
       "prop": "envelope",
+      "reputationChange": 0,
+      "moneyChange": 0,
       "dialogue": {
         "studentOffer": "{studentName}{majorSuffix}: \"Professor... I can't fail. Maybe we can... work something out?\"",
         "professorPrompt": "Professor: \"A discreet envelope, left on the desk. What do you do?\""
@@ -22,7 +24,9 @@
           "professorReply": "Professor: \"...Fine. Your grade is now a C. Not a word to anyone.\"",
           "outcome": "You accepted the bribe. Academic integrity has left the chat.",
           "gradeDisplay": "Grade: C (adjusted)",
-          "animation": "accept_bribe"
+          "animation": "accept_bribe",
+          "reputationChange": -10,
+          "moneyChange": 120
         },
         {
           "id": "reject",
@@ -31,7 +35,9 @@
           "studentReply": "{studentName}: \"But— wait!\"",
           "professorReply": "Professor: \"Absolutely not. Get out of my office.\"",
           "outcome": "You kicked the student out. The grade stays on the record.",
-          "animation": "kick_out"
+          "animation": "kick_out",
+          "reputationChange": 3,
+          "moneyChange": 0
         }
       ]
     },
@@ -43,6 +49,8 @@
       "chance": 100,
       "template": "confrontation",
       "banner": "Grade: {grade} — A student wants to talk",
+      "reputationChange": 0,
+      "moneyChange": 0,
       "dialogue": {
         "studentOffer": "{studentName}{majorSuffix}: \"Professor, my scholarship depends on a B. Can we talk?\"",
         "professorPrompt": "Professor: \"They look genuinely stressed. How do you respond?\""
@@ -55,7 +63,9 @@
           "studentReply": "{studentName}: \"Thank you! I won't let you down!\"",
           "professorReply": "Professor: \"One bonus question next week. Don't waste it.\"",
           "outcome": "You offered extra credit. Hope they earn it.",
-          "animation": "none"
+          "animation": "none",
+          "reputationChange": 2,
+          "moneyChange": 0
         },
         {
           "id": "stand_firm",
@@ -64,7 +74,9 @@
           "studentReply": "{studentName}: \"I understand...\"",
           "professorReply": "Professor: \"The grade stands. Work harder next term.\"",
           "outcome": "You stood firm. The grade stays a C.",
-          "animation": "student_leaves"
+          "animation": "student_leaves",
+          "reputationChange": 1,
+          "moneyChange": 0
         }
       ]
     },
@@ -77,6 +89,8 @@
       "template": "confrontation",
       "banner": "Grade: {grade} — Unexpected visitor",
       "prop": "gift",
+      "reputationChange": 0,
+      "moneyChange": 0,
       "dialogue": {
         "studentOffer": "{studentName}{majorSuffix}: \"Professor, thank you! I brought you something small.\"",
         "professorPrompt": "Professor: \"A wrapped gift on the desk. Accept it?\""
@@ -89,7 +103,9 @@
           "studentReply": "{studentName}: \"I'm glad you like it!\"",
           "professorReply": "Professor: \"That's very kind. You made my day.\"",
           "outcome": "You accepted the gift graciously. Teaching feels worth it.",
-          "animation": "accept_gift"
+          "animation": "accept_gift",
+          "reputationChange": -2,
+          "moneyChange": 25
         },
         {
           "id": "decline_gift",
@@ -98,7 +114,9 @@
           "studentReply": "{studentName}: \"Of course, I understand.\"",
           "professorReply": "Professor: \"Thank you, but I can't accept gifts from students.\"",
           "outcome": "You declined professionally. Boundaries intact.",
-          "animation": "student_leaves"
+          "animation": "student_leaves",
+          "reputationChange": 4,
+          "moneyChange": 0
         }
       ]
     }

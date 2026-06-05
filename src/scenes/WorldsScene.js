@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { loadRandomStudent } from "../game/dbLoader";
+import { createCareerHud, updateCareerHud } from "../game/careerHud";
+import { loadCareer, STUDENTS_PER_DAY } from "../game/careerStore";
 import {
   loadProgress,
 } from "../game/progressStore";
@@ -19,13 +21,16 @@ export class WorldsScene extends Phaser.Scene {
   render() {
     this.children.removeAll();
     this.progress = loadProgress();
+    this.career = loadCareer();
     const cx = this.scale.width / 2;
     const cy = this.scale.height / 2;
+    this.careerHud = createCareerHud(this, { depth: 30, top: 0 });
+    updateCareerHud(this.careerHud, this.career);
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 3 });
 
     // Centered vertical stack
     const logoH = 190;
-    const panelH = 210;
+    const panelH = 250;
     const buttonH = 150;
     const gapA = 44;
     const gapB = 56;
@@ -44,20 +49,29 @@ export class WorldsScene extends Phaser.Scene {
     const panelY = logoY + logoH / 2 + gapA + panelH / 2;
     this.createRoundedPanel(cx, panelY, 820, panelH);
 
-    this.add.text(cx, panelY - 62, "Your records", {
+    this.add.text(cx, panelY - 62, "Professor career", {
       fontFamily: "Arial",
       fontSize: "34px",
       color: "#64748b",
     }).setOrigin(0.5);
-    this.add.text(cx, panelY + 10, `Best: ${this.progress.bestStreak || 0}`, {
+    this.add.text(cx, panelY - 8, `Reputation: ${this.career.reputation}`, {
       fontFamily: "Arial",
-      fontSize: "56px",
+      fontSize: "42px",
       fontStyle: "bold",
       color: "#1e2b57",
     }).setOrigin(0.5);
+    this.add.text(cx, panelY + 44, `Savings: $${this.career.money}`, {
+      fontFamily: "Arial",
+      fontSize: "36px",
+      color: "#2b9f89",
+      fontStyle: "bold",
+    }).setOrigin(0.5);
 
     const buttonY = panelY + panelH / 2 + gapB + buttonH / 2;
-    const startButton = this.createMainButton(cx, buttonY, "START EXAM", () => {
+    const startLabel = this.career.studentsGradedToday > 0
+      ? `CONTINUE DAY (${this.career.studentsGradedToday}/${STUDENTS_PER_DAY})`
+      : "START WORK DAY";
+    const startButton = this.createMainButton(cx, buttonY, startLabel, () => {
       this.startExam();
     });
     startButton.bg.setDepth(10);
@@ -69,6 +83,11 @@ export class WorldsScene extends Phaser.Scene {
   async startExam() {
     if (this.startingExam) return;
     this.startingExam = true;
+
+    if (this.career.studentsGradedToday >= STUDENTS_PER_DAY) {
+      this.scene.start("DayEndScene");
+      return;
+    }
 
     try {
       const student = await loadRandomStudent();

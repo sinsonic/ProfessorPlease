@@ -6,10 +6,15 @@ import {
   createSpeechBubble,
   createStudentFigure,
   drawClassroom,
-  playStudentApproach,
 } from "../game/classroomVisuals";
-import { loadRandomStudent } from "../game/dbLoader";
-import { interpolateSceneText } from "../game/specialScenesLoader";
+import { applyCareerEffects } from "../game/careerStore";
+import { createCareerHud, updateCareerHud } from "../game/careerHud";
+import {
+  formatEffectSummary,
+  getChoiceEffects,
+  interpolateSceneText,
+} from "../game/specialScenesLoader";
+import { continueAfterStudent, getContinueButtonLabel } from "../game/studentDayFlow";
 
 const CHOICE_COLORS = {
   accept: 0x2b9f89,
@@ -44,6 +49,8 @@ export class SpecialScene extends Phaser.Scene {
     }
 
     this.cameras.main.setBackgroundColor("#e9dcc8");
+    this.careerHud = createCareerHud(this, { depth: 35, top: 0 });
+    updateCareerHud(this.careerHud);
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 5 });
     this.layer = this.add.container(0, 0).setDepth(20);
 
@@ -210,7 +217,13 @@ export class SpecialScene extends Phaser.Scene {
       this.gradeBanner.setColor("#2b9f89");
     }
 
-    this.outcomeText.setText(this.text(choice.outcome));
+    const effects = getChoiceEffects(this.sceneConfig, choice);
+    const { career } = applyCareerEffects(effects);
+    updateCareerHud(this.careerHud, career);
+
+    const effectSummary = formatEffectSummary(effects);
+    const outcome = this.text(choice.outcome);
+    this.outcomeText.setText(effectSummary ? `${outcome}\n\n${effectSummary}` : outcome);
     this.finishOutcome();
   }
 
@@ -269,42 +282,19 @@ export class SpecialScene extends Phaser.Scene {
       .setStrokeStyle(0, 0, 0)
       .setInteractive({ useHandCursor: true })
       .setDepth(35);
-    this.add.text(540, y, "NEXT STUDENT", {
+    this.add.text(540, y, getContinueButtonLabel(), {
       fontFamily: "Arial",
       fontSize: "56px",
       fontStyle: "bold",
       color: "#ffffff",
     }).setOrigin(0.5).setDepth(36);
-    bg.on("pointerdown", () => this.startNextStudent());
+    bg.on("pointerdown", () => this.handleContinue());
   }
 
-  async startNextStudent() {
+  async handleContinue() {
     if (this.loadingNext) return;
     this.loadingNext = true;
-
-    try {
-      const student = await loadRandomStudent();
-      this.children.list.forEach((child) => {
-        if (child !== this.classroom?.root) child.setVisible(false);
-      });
-
-      playStudentApproach(this, {
-        studentName: student.name,
-        major: student.major,
-        depth: 30,
-        onComplete: () => {
-          this.scene.start("QuizScene", { student });
-        },
-      });
-    } catch (error) {
-      this.loadingNext = false;
-      this.add.text(540, 1700, `Could not load student: ${error.message}`, {
-        fontFamily: "Arial",
-        fontSize: "28px",
-        color: "#dc2626",
-        align: "center",
-        wordWrap: { width: 900 },
-      }).setOrigin(0.5).setDepth(40);
-    }
+    await continueAfterStudent(this, { classroom: this.classroom });
+    this.loadingNext = false;
   }
 }
