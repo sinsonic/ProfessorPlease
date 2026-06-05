@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { loadRandomStudent } from "../game/dbLoader";
-import { drawClassroom } from "../game/classroomVisuals";
+import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { gameplayStart, gameplayStop } from "../game/crazyGamesSdk";
 
 const STATEMENTS_PER_STUDENT = 5;
@@ -19,6 +19,7 @@ export class QuizScene extends Phaser.Scene {
     this.statements = [];
     this.currentIndex = 0;
     this.correctCount = 0;
+    this.examStarted = false;
   }
 
   create() {
@@ -38,12 +39,24 @@ export class QuizScene extends Phaser.Scene {
           this.renderError("No student statements found.");
           return;
         }
-        this.showStudentArrivalBanner();
-        try {
-          this.renderQuestion();
-        } catch (error) {
-          this.renderError(`Failed to start exam: ${error.message}`);
-        }
+        this.statusText.setText("A student is on the way...");
+        this.setQuizUiVisible(false);
+        const beginExam = () => {
+          if (this.examStarted) return;
+          this.examStarted = true;
+          this.setQuizUiVisible(true);
+          try {
+            this.renderQuestion();
+          } catch (error) {
+            this.renderError(`Failed to start exam: ${error.message}`);
+          }
+        };
+        playStudentApproach(this, {
+          studentName: this.student.name,
+          major: this.student.major,
+          depth: 8,
+          onComplete: beginExam,
+        });
       })
       .catch((error) => {
         if (!this.sys?.isActive()) return;
@@ -51,28 +64,18 @@ export class QuizScene extends Phaser.Scene {
       });
   }
 
-  showStudentArrivalBanner() {
-    const major = this.student?.major ? ` (${this.student.major})` : "";
-    const banner = this.add.text(540, 190, `${this.student.name}${major} brought exam papers`, {
-      fontFamily: "Arial",
-      fontSize: "34px",
-      fontStyle: "bold",
-      color: "#1e2b57",
-      align: "center",
-      wordWrap: { width: 900 },
-    }).setOrigin(0.5).setDepth(30);
-
-    this.tweens.add({
-      targets: banner,
-      alpha: 0,
-      y: 150,
-      delay: 900,
-      duration: 350,
-      onComplete: () => banner.destroy(),
-    });
+  setQuizUiVisible(visible) {
+    const alpha = visible ? 1 : 0;
+    this.streakText?.setAlpha(alpha);
+    this.scoreText?.setAlpha(alpha);
+    this.statusText?.setAlpha(alpha);
+    if (this.questionContainer) {
+      this.questionContainer.setVisible(visible);
+    }
   }
 
   renderError(message) {
+    this.setQuizUiVisible(true);
     this.add
       .text(this.scale.width / 2, this.scale.height / 2, message, {
         fontFamily: "Arial",

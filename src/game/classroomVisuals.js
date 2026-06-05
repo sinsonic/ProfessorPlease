@@ -210,6 +210,7 @@ export function playStudentApproach(scene, {
 
   // Failsafe: never leave the quiz stuck behind the intro overlay.
   scene.time.delayedCall(3200, finish);
+  window.setTimeout(finish, 3400);
 
   return { overlay, classroom, student, nameTag, status, finish };
 }
