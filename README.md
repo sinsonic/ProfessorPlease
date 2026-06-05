@@ -4,7 +4,7 @@ HTML5 quiz game built with Phaser and Vite.
 
 ## Run locally
 
-Do **not** open `index.html` directly in the browser. Use the Vite dev server:
+Use the Vite dev server (entry file: `index.source.html`):
 
 ```bash
 npm install
@@ -19,19 +19,13 @@ Production-like preview:
 npm run preview
 ```
 
-Then open http://localhost:4173/
-
 ## GitHub Pages
 
-The live site must serve the **built** bundle (not raw `src/`).
+Live site: https://sinsonic.github.io/ProfessorPlease/
 
-1. Push to `main` — GitHub Actions builds and commits the bundle to the `docs/` folder.
-2. In repo **Settings → Pages**:
-   - **Source:** Deploy from a branch
-   - **Branch:** `main`
-   - **Folder:** `/docs`
-   - **Custom domain:** leave empty
-3. Open https://sinsonic.github.io/ProfessorPlease/
+The repo root contains the **built** bundle (`index.html`, `assets/`, `data/`). GitHub Actions rebuilds these on every push to `main`.
+
+Pages settings: **Deploy from branch** → `main` → `/ (root)`
 
 ## CrazyGames build
 

@@ -3,8 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "docs/**"
 
 permissions:
   contents: write
@@ -15,6 +13,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,11 +27,21 @@ jobs:
       - run: npm run build:pages
 
       - run: |
-          rm -rf docs
-          cp -r dist docs
+          rm -rf docs assets data
+          cp -r dist/assets assets
+          cp -r dist/data data
+          cp dist/index.source.html index.html
+          mkdir -p docs
+          cp dist/index.source.html docs/index.html
+          cp -r dist/assets docs/assets
+          cp -r dist/data docs/data
           touch docs/.nojekyll
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Deploy GitHub Pages build to docs/"
-          file_pattern: docs/**
+          commit_message: "Deploy GitHub Pages build [skip ci]"
+          file_pattern: |
+            docs/**
+            assets/**
+            data/**
+            index.html
