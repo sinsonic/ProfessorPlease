@@ -6,14 +6,50 @@ function getSdk() {
   return window.CrazyGames || null;
 }
 
+export function isCrazyGamesEnvironment() {
+  if (typeof window === "undefined") return false;
+  return /crazygames\.com$/i.test(window.location.hostname);
+}
+
+function loadSdkScript() {
+  if (!isCrazyGamesEnvironment()) {
+    return Promise.resolve(false);
+  }
+  if (getSdk()) {
+    return Promise.resolve(true);
+  }
+
+  const existing = document.querySelector("script[data-crazygames-sdk]");
+  if (existing) {
+    return new Promise((resolve) => {
+      existing.addEventListener("load", () => resolve(!!getSdk()), { once: true });
+      existing.addEventListener("error", () => resolve(false), { once: true });
+    });
+  }
+
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://sdk.crazygames.com/crazygames-sdk-v3.js";
+    script.dataset.crazygamesSdk = "true";
+    script.async = true;
+    script.onload = () => resolve(!!getSdk());
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
+
 export async function initCrazyGames() {
+  if (!isCrazyGamesEnvironment()) return;
   if (initialized) return;
   if (initPromise) return initPromise;
 
-  const sdk = getSdk();
-  if (!sdk) return;
-
   initPromise = (async () => {
+    const loaded = await loadSdkScript();
+    if (!loaded) return;
+
+    const sdk = getSdk();
+    if (!sdk) return;
+
     try {
       await Promise.race([
         sdk.SDK.init(),
@@ -31,6 +67,8 @@ export async function initCrazyGames() {
 }
 
 function runWhenReady(callback, label) {
+  if (!isCrazyGamesEnvironment()) return;
+
   void initCrazyGames().then(() => {
     if (!initialized) return;
     try {
