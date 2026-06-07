@@ -8,7 +8,7 @@ export class HiddenObjectScene extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setBackgroundColor("#6b4423");
+    this.cameras.main.setBackgroundColor("#e9dcc8");
     this.foundIds = new Set();
     this.checklistRows = new Map();
     this.isComplete = false;

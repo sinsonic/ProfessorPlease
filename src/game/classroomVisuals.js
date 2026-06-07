@@ -1,4 +1,5 @@
 import { TABLE } from "./classroomConstants";
+import { addClassroomBackground, hasClassroomBackground } from "./classroomBackground";
 import { drawOwnedDecorations } from "./classroomDecorations";
 
 export { TABLE };
@@ -16,10 +17,7 @@ function drawPaper(scene, x, y, rotation = 0, alpha = 1, parent = null) {
   return paper;
 }
 
-export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
-  const root = scene.add.container(0, 0);
-  root.setDepth(depth);
-
+function drawProceduralClassroom(scene, root) {
   const wall = scene.add.rectangle(540, 760, 1080, 1520, 0xe9dcc8);
   const floor = scene.add.rectangle(540, 1760, 1080, 320, 0xc9a66b);
   const floorLine = scene.add.rectangle(540, 1600, 1080, 6, 0x9a7348, 0.35);
@@ -43,20 +41,6 @@ export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
   const deskTop = scene.add.rectangle(TABLE.x, TABLE.y, TABLE.width, TABLE.height, 0x8b5e3c)
     .setStrokeStyle(4, 0x6b4423);
   const deskFront = scene.add.rectangle(TABLE.x, TABLE.y + 58, TABLE.width - 80, 70, 0x6b4423);
-
-  const papers = [];
-  const offsets = [
-    { x: -90, y: -18, r: -0.08 },
-    { x: 0, y: -24, r: 0.04 },
-    { x: 90, y: -16, r: 0.1 },
-    { x: -45, y: -30, r: -0.02 },
-    { x: 45, y: -28, r: 0.06 },
-  ];
-  for (let i = 0; i < paperCount; i += 1) {
-    const o = offsets[i % offsets.length];
-    papers.push(drawPaper(scene, TABLE.x + o.x, TABLE.y + o.y, o.r));
-  }
-
   const chair = scene.add.rectangle(TABLE.x, TABLE.y + 170, 180, 46, 0x4b5563, 0.25);
 
   root.add([
@@ -72,8 +56,33 @@ export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
     deskTop,
     deskFront,
     chair,
-    ...papers,
   ]);
+}
+
+export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
+  const root = scene.add.container(0, 0);
+  root.setDepth(depth);
+
+  if (hasClassroomBackground(scene)) {
+    addClassroomBackground(scene, root);
+  } else {
+    drawProceduralClassroom(scene, root);
+  }
+
+  const papers = [];
+  const offsets = [
+    { x: -90, y: -18, r: -0.08 },
+    { x: 0, y: -24, r: 0.04 },
+    { x: 90, y: -16, r: 0.1 },
+    { x: -45, y: -30, r: -0.02 },
+    { x: 45, y: -28, r: 0.06 },
+  ];
+  for (let i = 0; i < paperCount; i += 1) {
+    const o = offsets[i % offsets.length];
+    papers.push(drawPaper(scene, TABLE.x + o.x, TABLE.y + o.y, o.r));
+  }
+
+  root.add(papers);
 
   const decorLayer = scene.add.container(0, 0).setDepth(depth + 1);
   drawOwnedDecorations(scene, decorLayer);

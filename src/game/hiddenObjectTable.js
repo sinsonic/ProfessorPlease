@@ -1,3 +1,5 @@
+import { addClassroomBackground, hasClassroomBackground } from "./classroomBackground";
+
 const CLUTTER = [
   { type: "book_stack", x: 260, y: 520, color: 0x7c3aed, rotation: -0.12 },
   { type: "book_stack", x: 780, y: 480, color: 0x2563eb, rotation: 0.08 },
@@ -382,12 +384,16 @@ function drawClutterItem(scene, item) {
 export function drawHiddenObjectDesk(scene, targets = []) {
   const root = scene.add.container(0, 0).setDepth(0);
 
-  const wood = scene.add.rectangle(540, 960, 1080, 1920, 0x8b5e3c);
-  const grainA = scene.add.rectangle(540, 640, 1080, 8, 0x6b4423, 0.15);
-  const grainB = scene.add.rectangle(540, 1120, 1080, 6, 0x6b4423, 0.12);
-  const grainC = scene.add.rectangle(540, 1540, 1080, 10, 0x6b4423, 0.1);
-  const vignette = scene.add.rectangle(540, 960, 1080, 1920, 0x000000, 0.08);
-  root.add([wood, grainA, grainB, grainC, vignette]);
+  if (hasClassroomBackground(scene)) {
+    addClassroomBackground(scene, root);
+  } else {
+    const wood = scene.add.rectangle(540, 960, 1080, 1920, 0x8b5e3c);
+    const grainA = scene.add.rectangle(540, 640, 1080, 8, 0x6b4423, 0.15);
+    const grainB = scene.add.rectangle(540, 1120, 1080, 6, 0x6b4423, 0.12);
+    const grainC = scene.add.rectangle(540, 1540, 1080, 10, 0x6b4423, 0.1);
+    const vignette = scene.add.rectangle(540, 960, 1080, 1920, 0x000000, 0.08);
+    root.add([wood, grainA, grainB, grainC, vignette]);
+  }
 
   const clutterLayer = scene.add.container(0, 0);
   CLUTTER.forEach((item) => {

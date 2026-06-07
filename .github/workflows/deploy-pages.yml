@@ -27,16 +27,18 @@ jobs:
       - run: npm run build:pages
 
       - run: |
-          rm -rf docs assets data
+          rm -rf docs assets data images
           cp -r dist/assets assets
           cp -r dist/data data
+          cp -r dist/images images
           cp dist/index.source.html index.html
           mkdir -p docs
           cp dist/index.source.html docs/index.html
           cp -r dist/assets docs/assets
           cp -r dist/data docs/data
+          cp -r dist/images docs/images
           touch docs/.nojekyll
-          git add -A docs assets data index.html
+          git add -A docs assets data images index.html
           git diff --staged --quiet || git commit -m "Deploy GitHub Pages build [skip ci]"
 
       - run: git push

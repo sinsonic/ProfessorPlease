@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import "./styles.css";
+import { BootScene } from "./scenes/BootScene";
 import { DayEndScene } from "./scenes/DayEndScene";
 import { ShopScene } from "./scenes/ShopScene";
 import { SpecialScene } from "./scenes/SpecialScene";
@@ -14,12 +15,12 @@ const gameConfig = {
   parent: "app",
   width: 1080,
   height: 1920,
-  backgroundColor: "#0f172a",
+  backgroundColor: "#e9dcc8",
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [WorldsScene, QuizScene, QuizSummaryScene, SpecialScene, DayEndScene, ShopScene, HiddenObjectScene],
+  scene: [BootScene, WorldsScene, QuizScene, QuizSummaryScene, SpecialScene, DayEndScene, ShopScene, HiddenObjectScene],
 };
 
 initCrazyGames();
