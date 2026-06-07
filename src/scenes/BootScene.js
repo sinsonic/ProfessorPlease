@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { preloadClassroomBackground } from "../game/classroomBackground";
+import { preloadProfessorAvatar } from "../game/professorAvatar";
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -8,6 +9,7 @@ export class BootScene extends Phaser.Scene {
 
   preload() {
     preloadClassroomBackground(this);
+    preloadProfessorAvatar(this);
   }
 
   create() {

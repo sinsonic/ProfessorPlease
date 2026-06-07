@@ -1,4 +1,5 @@
 import { addClassroomBackground, hasClassroomBackground } from "./classroomBackground";
+import { addProfessorBehindDesk } from "./professorAvatar";
 
 const CLUTTER = [
   { type: "book_stack", x: 260, y: 520, color: 0x7c3aed, rotation: -0.12 },
@@ -386,6 +387,7 @@ export function drawHiddenObjectDesk(scene, targets = []) {
 
   if (hasClassroomBackground(scene)) {
     addClassroomBackground(scene, root);
+    addProfessorBehindDesk(scene, root);
   } else {
     const wood = scene.add.rectangle(540, 960, 1080, 1920, 0x8b5e3c);
     const grainA = scene.add.rectangle(540, 640, 1080, 8, 0x6b4423, 0.15);

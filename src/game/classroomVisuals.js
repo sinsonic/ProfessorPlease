@@ -1,5 +1,6 @@
 import { TABLE } from "./classroomConstants";
 import { addClassroomBackground, hasClassroomBackground } from "./classroomBackground";
+import { addProfessorBehindDesk } from "./professorAvatar";
 import { drawOwnedDecorations } from "./classroomDecorations";
 
 export { TABLE };
@@ -69,6 +70,10 @@ export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
     drawProceduralClassroom(scene, root);
   }
 
+  const professor = addProfessorBehindDesk(scene, root, {
+    withDeskOverlay: hasClassroomBackground(scene),
+  });
+
   const papers = [];
   const offsets = [
     { x: -90, y: -18, r: -0.08 },
@@ -87,7 +92,7 @@ export function drawClassroom(scene, { depth = 0, paperCount = 3 } = {}) {
   const decorLayer = scene.add.container(0, 0).setDepth(depth + 1);
   drawOwnedDecorations(scene, decorLayer);
 
-  return { root, decorLayer, table: TABLE, papers };
+  return { root, decorLayer, table: TABLE, papers, professor };
 }
 
 export function replaceClassroom(scene, previous, options) {
