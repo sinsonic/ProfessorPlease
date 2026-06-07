@@ -73,6 +73,7 @@ export class QuizScene extends Phaser.Scene {
     playStudentApproach(this, {
       studentName: student.name,
       major: student.major,
+      avatarKey: student.avatarKey,
       depth: 30,
       onComplete: () => this.beginExamWithStudent(student),
     });
@@ -807,6 +808,7 @@ export class QuizScene extends Phaser.Scene {
     goToExamResult(this, {
       studentName: this.student?.name || "Student",
       studentMajor: this.student?.major || "",
+      avatarKey: this.student?.avatarKey || "student1",
       correctCount: this.correctCount,
       total: STATEMENTS_PER_STUDENT,
     });

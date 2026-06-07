@@ -4,9 +4,10 @@ import {
   createBribeEnvelope,
   createProfessorFigure,
   createSpeechBubble,
-  createStudentFigure,
+  createStudentActor,
   drawClassroom,
 } from "../game/classroomVisuals";
+import { getStudentPropOffset, STUDENT_FEET_Y } from "../game/studentAvatars";
 import { applyCareerEffects } from "../game/careerStore";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import {
@@ -33,6 +34,7 @@ export class SpecialScene extends Phaser.Scene {
     this.sceneContext = data?.sceneContext || {};
     this.studentName = data?.studentName || "Student";
     this.studentMajor = data?.studentMajor || "";
+    this.avatarKey = data?.avatarKey || "student1";
     this.correctCount = Number.isFinite(data?.correctCount) ? data.correctCount : 0;
     this.total = Number.isFinite(data?.total) ? data.total : 5;
     this.resolved = false;
@@ -60,18 +62,19 @@ export class SpecialScene extends Phaser.Scene {
     this.professor.setPosition(TABLE.x - 180, TABLE.y - 90);
     this.layer.add(this.professor);
 
-    this.student = createStudentFigure(this);
-    this.student.setPosition(1120, TABLE.y + 20);
-    this.student.heldPapers.setVisible(false);
+    this.student = createStudentActor(this, 0, 0, this.avatarKey);
+    this.student.setPosition(1120, STUDENT_FEET_Y);
+    if (this.student.heldPapers) this.student.heldPapers.setVisible(false);
     this.layer.add(this.student);
 
+    const propOffset = getStudentPropOffset(this.student);
     this.prop = null;
     if (this.sceneConfig.prop === "envelope") {
       this.prop = createBribeEnvelope(this, this.student);
-      this.prop.setPosition(48, 10);
+      this.prop.setPosition(propOffset.x, propOffset.y);
       this.prop.setScale(0);
     } else if (this.sceneConfig.prop === "gift") {
-      this.prop = this.createGiftProp(this.student);
+      this.prop = this.createGiftProp(this.student, propOffset);
     }
 
     const bannerText = this.text(this.sceneConfig.banner);
@@ -132,14 +135,14 @@ export class SpecialScene extends Phaser.Scene {
     return interpolateSceneText(template, this.sceneContext);
   }
 
-  createGiftProp(parent) {
+  createGiftProp(parent, offset = { x: 42, y: 4 }) {
     const gift = this.add.container(0, 0);
     const box = this.add.rectangle(0, 0, 56, 56, 0xf59e0b).setStrokeStyle(2, 0xb45309);
     const ribbonV = this.add.rectangle(0, 0, 12, 56, 0xdc2626);
     const ribbonH = this.add.rectangle(0, 0, 56, 12, 0xdc2626);
     const bow = this.add.circle(0, -24, 10, 0xdc2626);
     gift.add([box, ribbonV, ribbonH, bow]);
-    gift.setPosition(42, 4);
+    gift.setPosition(offset.x, offset.y);
     gift.setScale(0);
     parent.add(gift);
     return gift;

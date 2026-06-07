@@ -105,6 +105,7 @@ export class WorldsScene extends Phaser.Scene {
       playStudentApproach(this, {
         studentName: student.name,
         major: student.major,
+        avatarKey: student.avatarKey,
         depth: 30,
         onComplete: () => {
           this.scene.start("QuizScene", { student });

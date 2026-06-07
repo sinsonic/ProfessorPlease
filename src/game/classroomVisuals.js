@@ -2,6 +2,12 @@ import { TABLE } from "./classroomConstants";
 import { addClassroomBackground, hasClassroomBackground } from "./classroomBackground";
 import { addProfessorBehindDesk } from "./professorAvatar";
 import { drawOwnedDecorations } from "./classroomDecorations";
+import {
+  createStudentSprite,
+  hasStudentAvatar,
+  STUDENT_FEET_Y,
+  STUDENT_SPRITE_HEIGHT,
+} from "./studentAvatars";
 
 export { TABLE };
 
@@ -125,9 +131,18 @@ export function createStudentFigure(scene, x, y) {
   return student;
 }
 
+export function createStudentActor(scene, x, y, avatarKey, options) {
+  if (avatarKey && hasStudentAvatar(scene, avatarKey)) {
+    const sprite = createStudentSprite(scene, x, y, avatarKey, options);
+    if (sprite) return sprite;
+  }
+  return createStudentFigure(scene, x, y);
+}
+
 export function playStudentApproach(scene, {
   studentName = "Student",
   major = "",
+  avatarKey = "student1",
   onComplete,
   depth = 50,
 } = {}) {
@@ -160,8 +175,8 @@ export function playStudentApproach(scene, {
   }).setOrigin(0.5).setAlpha(0);
   layer.add(nameTag);
 
-  const student = createStudentFigure(scene, 0, 0);
-  student.setPosition(1120, TABLE.y + 20);
+  const student = createStudentActor(scene, 0, 0, avatarKey);
+  student.setPosition(1120, STUDENT_FEET_Y);
   layer.add(student);
 
   const paperTargets = [
@@ -174,7 +189,9 @@ export function playStudentApproach(scene, {
 
   const cleanup = () => {
     timers.forEach((id) => window.clearTimeout(id));
-    scene.tweens.killTweensOf([student, student.heldPapers, nameTag, status, ...deliveredPapers]);
+    const tweenTargets = [student, nameTag, status, ...deliveredPapers];
+    if (student.heldPapers) tweenTargets.push(student.heldPapers);
+    scene.tweens.killTweensOf(tweenTargets);
     layer.destroy();
   };
 
@@ -187,13 +204,17 @@ export function playStudentApproach(scene, {
 
   const dropPapers = () => {
     status.setText("Placing exam papers...");
-    student.heldPapers.setAlpha(0);
+    if (student.heldPapers) student.heldPapers.setAlpha(0);
+
+    const paperDropY = student.sprite
+      ? student.y - STUDENT_SPRITE_HEIGHT * 0.52
+      : student.y - 40;
 
     paperTargets.forEach((target, index) => {
       schedule(() => {
         if (finished) return;
         const startX = student.x + 30;
-        const startY = student.y - 40;
+        const startY = paperDropY;
         const paper = drawPaper(scene, 0, 0, 0);
         paper.setPosition(startX, startY);
         layer.add(paper);

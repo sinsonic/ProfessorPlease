@@ -1,4 +1,5 @@
 import { publicAssetUrl } from "./assetUrl";
+import { resolveStudentAvatarKey } from "./studentAvatars";
 
 let cachedStudents = null;
 
@@ -32,7 +33,12 @@ export async function loadAllStudents() {
     throw new Error("Invalid students.json: expected { students: [...] }");
   }
 
-  const normalized = students.filter(assertValidStudent);
+  const normalized = students
+    .filter(assertValidStudent)
+    .map((student) => ({
+      ...student,
+      avatarKey: resolveStudentAvatarKey(student),
+    }));
   if (normalized.length === 0) {
     throw new Error("Invalid students.json: no valid students (each must have exactly 5 statements)");
   }

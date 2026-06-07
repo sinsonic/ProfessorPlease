@@ -30,7 +30,8 @@
           "isCorrect": true,
           "explanation": "Two hearts pump blood to the gills, and one pumps it to the rest of the body."
         }
-      ]
+      ],
+      "avatarKey": "student1"
     },
     {
       "id": "student_002",
@@ -62,7 +63,8 @@
           "isCorrect": true,
           "explanation": "Shape‑memory alloys (like Nitinol) can return to a preset shape when heated due to a reversible change in crystal structure."
         }
-      ]
+      ],
+      "avatarKey": "student2"
     },
     {
       "id": "student_003",
@@ -94,7 +96,8 @@
           "isCorrect": true,
           "explanation": "From French/Latin roots, it literally means 'rebirth', referring to renewed interest in classical art and learning."
         }
-      ]
+      ],
+      "avatarKey": "student3"
     },
     {
       "id": "student_004",
@@ -126,7 +129,8 @@
           "isCorrect": false,
           "explanation": "We also sense balance, temperature, pain, body position (proprioception), and more beyond the classic five."
         }
-      ]
+      ],
+      "avatarKey": "student4"
     },
     {
       "id": "student_005",
@@ -158,7 +162,8 @@
           "isCorrect": true,
           "explanation": "After hydrogen, helium makes up a large fraction of ordinary matter in stars and gas clouds."
         }
-      ]
+      ],
+      "avatarKey": "student1"
     },
     {
       "id": "student_006",
@@ -190,7 +195,8 @@
           "isCorrect": true,
           "explanation": "It is the distance light travels in one year, roughly 9.46 trillion kilometers."
         }
-      ]
+      ],
+      "avatarKey": "student2"
     },
     {
       "id": "student_007",
@@ -222,7 +228,8 @@
           "isCorrect": false,
           "explanation": "Iceland's name is historical; much of Greenland, not Iceland, is ice-covered."
         }
-      ]
+      ],
+      "avatarKey": "student3"
     },
     {
       "id": "student_008",
@@ -254,7 +261,8 @@
           "isCorrect": false,
           "explanation": "Several theories exist, but déjà vu is not fully explained by a single mechanism."
         }
-      ]
+      ],
+      "avatarKey": "student4"
     },
     {
       "id": "student_009",
@@ -286,7 +294,8 @@
           "isCorrect": false,
           "explanation": "Conductivity varies widely; silver and copper conduct far better than many others."
         }
-      ]
+      ],
+      "avatarKey": "student1"
     },
     {
       "id": "student_010",
@@ -318,7 +327,8 @@
           "isCorrect": false,
           "explanation": "Skin dehydrates and retracts, making nails and hair appear longer; cells are not actively growing."
         }
-      ]
+      ],
+      "avatarKey": "student2"
     },
     {
       "id": "student_011",
@@ -350,7 +360,8 @@
           "isCorrect": false,
           "explanation": "It was composed in Ancient Greek; English versions are translations."
         }
-      ]
+      ],
+      "avatarKey": "student3"
     },
     {
       "id": "student_012",
@@ -382,7 +393,8 @@
           "isCorrect": true,
           "explanation": "Economics studies how societies allocate limited resources among competing wants."
         }
-      ]
+      ],
+      "avatarKey": "student4"
     },
     {
       "id": "student_013",
@@ -414,7 +426,8 @@
           "isCorrect": true,
           "explanation": "Primes thin out as numbers grow, though there are still infinitely many primes overall."
         }
-      ]
+      ],
+      "avatarKey": "student1"
     }
   ]
 }

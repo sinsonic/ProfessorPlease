@@ -23,6 +23,7 @@ export async function continueAfterStudent(scene, { classroom = null } = {}) {
     playStudentApproach(scene, {
       studentName: student.name,
       major: student.major,
+      avatarKey: student.avatarKey,
       depth: 30,
       onComplete: () => {
         scene.scene.start("QuizScene", { student });
