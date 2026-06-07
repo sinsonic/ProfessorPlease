@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
@@ -26,7 +28,11 @@ jobs:
       - run: npm ci
       - run: npm run build:pages
 
-      - run: |
+      - name: Commit and push built files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           rm -rf docs assets data images
           cp -r dist/assets assets
           cp -r dist/data data
@@ -38,7 +44,13 @@ jobs:
           cp -r dist/data docs/data
           cp -r dist/images docs/images
           touch docs/.nojekyll
-          git add -A docs assets data images index.html
-          git diff --staged --quiet || git commit -m "Deploy GitHub Pages build [skip ci]"
 
-      - run: git push
+          git add -A docs assets data images index.html
+          if git diff --staged --quiet; then
+            echo "No deploy changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Deploy GitHub Pages build [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main
