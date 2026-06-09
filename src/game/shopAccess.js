@@ -61,7 +61,12 @@ export function exitShop(scene, parentScene) {
   if (parentScene && scene.scene.isPaused(parentScene)) {
     scene.scene.resume(parentScene);
     const parent = scene.scene.get(parentScene);
-    if (parent) refreshSceneClassroom(parent);
+    if (parent) {
+      refreshSceneClassroom(parent);
+      if (typeof parent.onShopClosed === "function") {
+        parent.onShopClosed();
+      }
+    }
     return;
   }
   scene.scene.start("WorldsScene");

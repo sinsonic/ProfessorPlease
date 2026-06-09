@@ -11,6 +11,10 @@ export class DayEndScene extends Phaser.Scene {
     super("DayEndScene");
   }
 
+  onShopClosed() {
+    updateCareerHud(this.careerHud, loadCareer());
+  }
+
   create() {
     this.cameras.main.setBackgroundColor("#e9dcc8");
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 2 });

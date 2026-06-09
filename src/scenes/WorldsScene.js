@@ -15,8 +15,18 @@ export class WorldsScene extends Phaser.Scene {
     this.progress = loadProgress();
   }
 
+  init() {
+    this.startingExam = false;
+  }
+
   create() {
     this.cameras.main.setBackgroundColor("#e9dcc8");
+    this.startingExam = false;
+    this.render();
+  }
+
+  onShopClosed() {
+    this.startingExam = false;
     this.render();
   }
 
@@ -116,6 +126,7 @@ export class WorldsScene extends Phaser.Scene {
     this.startingExam = true;
 
     if (this.career.studentsGradedToday >= STUDENTS_PER_DAY) {
+      this.startingExam = false;
       this.scene.start("DayEndScene");
       return;
     }
