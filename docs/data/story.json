@@ -8,7 +8,8 @@
     {
       "day": 1,
       "title": "First Impressions",
-      "text": "Your office contains a desk, a coffee machine older than most students, and a locked filing cabinet labeled 'DO NOT OPEN UNDER ANY CIRCUMSTANCES.' Naturally, it is now the most interesting object in the room. The dean assures you everything at Ravenswood is perfectly normal. The dean also refuses to make eye contact when saying this."
+      "text": "Your office contains a desk, a coffee machine older than most students, and a locked filing cabinet labeled 'DO NOT OPEN UNDER ANY CIRCUMSTANCES.' Naturally, it is now the most interesting object in the room. The dean assures you everything at Ravenswood is perfectly normal. The dean also refuses to make eye contact when saying this.",
+      "cinematic": "day1"
     },
     {
       "day": 2,

@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import {
   TABLE,
   createBribeEnvelope,
-  createProfessorFigure,
   createSpeechBubble,
   createStudentActor,
   drawClassroom,
@@ -57,10 +56,6 @@ export class SpecialScene extends Phaser.Scene {
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 5 });
     createShopIcon(this, { depth: 60 });
     this.layer = this.add.container(0, 0).setDepth(20);
-
-    this.professor = createProfessorFigure(this);
-    this.professor.setPosition(TABLE.x - 180, TABLE.y - 90);
-    this.layer.add(this.professor);
 
     this.student = createStudentActor(this, 0, 0, this.avatarKey);
     this.student.setPosition(1120, STUDENT_FEET_Y);

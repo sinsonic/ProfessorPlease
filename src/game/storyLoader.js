@@ -8,6 +8,7 @@ function assertValidBeat(beat) {
   if (!Number.isFinite(beat.day) || beat.day < 0) return false;
   if (typeof beat.title !== "string" || !beat.title.trim()) return false;
   if (typeof beat.text !== "string" || !beat.text.trim()) return false;
+  if (beat.cinematic != null && typeof beat.cinematic !== "string") return false;
   return true;
 }
 
