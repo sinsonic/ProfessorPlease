@@ -2,8 +2,8 @@ import { publicAssetUrl } from "./assetUrl";
 
 export const TRAIN_STATION_KEY = "intro-train-station";
 export const PROFESSOR_BACK_KEY = "intro-professor-back";
-export const TRAIN_STATION_PATH = "images/train_station.png";
-export const PROFESSOR_BACK_PATH = "images/professor_back.png";
+export const TRAIN_STATION_PATH = "images/train_station.webp";
+export const PROFESSOR_BACK_PATH = "images/professor_back.webp";
 
 export function preloadIntroCutsceneAssets(scene) {
   if (!scene.textures.exists(TRAIN_STATION_KEY)) {
