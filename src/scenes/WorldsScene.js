@@ -3,7 +3,6 @@ import { drawClassroom, playStudentApproach } from "../game/classroomVisuals";
 import { loadRandomStudent } from "../game/dbLoader";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { activatePendingBoosters, loadCareer, STUDENTS_PER_DAY } from "../game/careerStore";
-import { createHiddenObjectButton } from "../game/hiddenObjectAccess";
 import { playHomeEntrance, shouldPlayHomeEntrance } from "../game/homeEntrance";
 import { createShopIcon } from "../game/shopAccess";
 import {
@@ -64,7 +63,6 @@ export class WorldsScene extends Phaser.Scene {
     startButton.bg.setDepth(10);
     startButton.label.setDepth(11);
 
-    const hiddenButton = createHiddenObjectButton(this, { depth: 60 });
     const shopButton = createShopIcon(this, { depth: 60 });
 
     if (shouldPlayHomeEntrance()) {
@@ -75,7 +73,6 @@ export class WorldsScene extends Phaser.Scene {
         careerPanel,
         startButton: startButtonGroup,
         shopButton,
-        hiddenButton,
       });
     }
   }

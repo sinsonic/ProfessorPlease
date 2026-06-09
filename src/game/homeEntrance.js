@@ -30,7 +30,6 @@ export function playHomeEntrance(scene, {
   careerPanel,
   startButton,
   shopButton,
-  hiddenButton,
 } = {}) {
   const classroomTargets = [classroom?.root, classroom?.decorLayer].filter(Boolean);
   classroomTargets.forEach((target) => {
@@ -66,17 +65,10 @@ export function playHomeEntrance(scene, {
     duration: 780,
   });
 
-  slideIn(scene, hiddenButton, {
-    fromX: hiddenButton.x - 240,
-    fromY: hiddenButton.y + 120,
-    delay: 560,
-    duration: 700,
-  });
-
   slideIn(scene, shopButton, {
     fromX: shopButton.x + 240,
     fromY: shopButton.y + 120,
-    delay: 640,
+    delay: 560,
     duration: 700,
   });
 
