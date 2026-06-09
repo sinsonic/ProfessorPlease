@@ -7,6 +7,8 @@ import { SpecialScene } from "./scenes/SpecialScene";
 import { QuizScene } from "./scenes/QuizScene";
 import { QuizSummaryScene } from "./scenes/QuizSummaryScene";
 import { HiddenObjectScene } from "./scenes/HiddenObjectScene";
+import { IntroCutsceneScene } from "./scenes/IntroCutsceneScene";
+import { StoryScene } from "./scenes/StoryScene";
 import { WorldsScene } from "./scenes/WorldsScene";
 import { initCrazyGames } from "./game/crazyGamesSdk";
 
@@ -20,7 +22,7 @@ const gameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [BootScene, WorldsScene, QuizScene, QuizSummaryScene, SpecialScene, DayEndScene, ShopScene, HiddenObjectScene],
+  scene: [BootScene, IntroCutsceneScene, StoryScene, WorldsScene, QuizScene, QuizSummaryScene, SpecialScene, DayEndScene, ShopScene, HiddenObjectScene],
 };
 
 initCrazyGames();

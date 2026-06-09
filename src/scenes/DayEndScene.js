@@ -4,6 +4,7 @@ import { completeWorkDay, loadCareer } from "../game/careerStore";
 import { createShopIcon } from "../game/shopAccess";
 import { drawClassroom } from "../game/classroomVisuals";
 import { getDailySalaryForReputation } from "../game/salaryLoader";
+import { continueAfterDayEnd } from "../game/storyFlow";
 
 export class DayEndScene extends Phaser.Scene {
   constructor() {
@@ -89,7 +90,7 @@ export class DayEndScene extends Phaser.Scene {
       }
 
       this.createButton(cx, cy + 340, "CONTINUE", () => {
-        this.scene.start("WorldsScene");
+        continueAfterDayEnd(this, result.completedDay);
       }, 640, 140, 52, true);
 
       createShopIcon(this, { depth: 60 });

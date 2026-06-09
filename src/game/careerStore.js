@@ -11,6 +11,9 @@ function createDefaultCareer() {
     pendingBoosters: [],
     activeBoosters: [],
     mistakeShieldUsed: false,
+    seenStoryDays: [],
+    seenIntroCutscene: false,
+    seenHomeScreenIntro: false,
   };
 }
 
@@ -26,7 +29,52 @@ function normalizeCareer(parsed) {
     pendingBoosters: Array.isArray(parsed?.pendingBoosters) ? parsed.pendingBoosters : [],
     activeBoosters: Array.isArray(parsed?.activeBoosters) ? parsed.activeBoosters : [],
     mistakeShieldUsed: Boolean(parsed?.mistakeShieldUsed),
+    seenStoryDays: Array.isArray(parsed?.seenStoryDays)
+      ? parsed.seenStoryDays.filter((day) => Number.isFinite(day) && day >= 0)
+      : [],
+    seenIntroCutscene: Boolean(parsed?.seenIntroCutscene),
+    seenHomeScreenIntro: Boolean(parsed?.seenHomeScreenIntro),
   };
+}
+
+export function hasSeenHomeScreenIntro(career = loadCareer()) {
+  return Boolean(career.seenHomeScreenIntro);
+}
+
+export function markHomeScreenIntroSeen() {
+  const career = loadCareer();
+  if (!career.seenHomeScreenIntro) {
+    career.seenHomeScreenIntro = true;
+    saveCareer(career);
+  }
+  return career;
+}
+
+export function hasSeenIntroCutscene(career = loadCareer()) {
+  return Boolean(career.seenIntroCutscene);
+}
+
+export function markIntroCutsceneSeen() {
+  const career = loadCareer();
+  if (!career.seenIntroCutscene) {
+    career.seenIntroCutscene = true;
+    saveCareer(career);
+  }
+  return career;
+}
+
+export function hasSeenStoryDay(storyDay, career = loadCareer()) {
+  return career.seenStoryDays.includes(storyDay);
+}
+
+export function markStoryDaySeen(storyDay) {
+  const career = loadCareer();
+  if (!career.seenStoryDays.includes(storyDay)) {
+    career.seenStoryDays.push(storyDay);
+    career.seenStoryDays.sort((a, b) => a - b);
+    saveCareer(career);
+  }
+  return career;
 }
 
 export function loadCareer() {
@@ -40,7 +88,11 @@ export function loadCareer() {
 }
 
 export function saveCareer(career) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(career));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(career));
+  } catch (error) {
+    console.warn("Could not save career progress:", error);
+  }
 }
 
 export function resetCareer() {

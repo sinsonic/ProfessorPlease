@@ -1,0 +1,59 @@
+{
+  "story": [
+    {
+      "day": 0,
+      "title": "Arrival",
+      "text": "You accepted the position at Ravenswood University mostly because it was the only institution willing to hire a professor whose previous performance review included the phrase 'technically correct, socially concerning.' The town seemed pleasant enough—quiet streets, old brick buildings, and an unusual number of crows. As your train pulled into the station, you noticed a faded sign: 'Welcome to Ravenswood. Trust Knowledge.' For some reason, the word trust had been painted over several times."
+    },
+    {
+      "day": 1,
+      "title": "First Impressions",
+      "text": "Your office contains a desk, a coffee machine older than most students, and a locked filing cabinet labeled 'DO NOT OPEN UNDER ANY CIRCUMSTANCES.' Naturally, it is now the most interesting object in the room. The dean assures you everything at Ravenswood is perfectly normal. The dean also refuses to make eye contact when saying this."
+    },
+    {
+      "day": 2,
+      "title": "Strange Statistics",
+      "text": "While reviewing university records, you discover something odd. Every year, exactly one professor resigns unexpectedly. Not approximately one. Exactly one. The university has maintained this streak for thirty-seven consecutive years. You make a note to ask about it later. Or perhaps never."
+    },
+    {
+      "day": 3,
+      "title": "The Bell",
+      "text": "At precisely 3:17 PM, a bell rings somewhere on campus. Students immediately stop talking. Professors stop walking. Even the birds seem quieter. After thirty seconds, everything returns to normal. When you ask what the bell means, people laugh nervously and change the subject."
+    },
+    {
+      "day": 4,
+      "title": "Missing Professor",
+      "text": "Today you inherited a stack of papers from Professor Adler, the person who held your position before you. Curiously, there is no record of his resignation. No forwarding address. No farewell message. Just a coffee mug still sitting in the faculty lounge. Someone continues refilling it every morning."
+    },
+    {
+      "day": 5,
+      "title": "Basement Access",
+      "text": "You received your staff keycard today. Most doors are accessible. One is not. According to the map, the inaccessible door leads to a basement that officially does not exist. The janitor notices you staring at it. 'Don't worry about that place,' he says. You immediately begin worrying about that place."
+    },
+    {
+      "day": 6,
+      "title": "The Founder",
+      "text": "A portrait hangs in the main hall. The university founder. The plaque claims he died in 1889. A newspaper article in the library contains a photograph of the same man dated 1914. You spend twenty minutes comparing them. It is definitely the same mustache."
+    },
+    {
+      "day": 7,
+      "title": "The Exam Question",
+      "text": "A student submitted an answer sheet today containing only one sentence: 'Have you figured it out yet?' The handwriting does not match the student's previous work. Neither does the signature. The student insists they never wrote it."
+    },
+    {
+      "day": 8,
+      "title": "Faculty Dinner",
+      "text": "You attended the monthly faculty dinner. The food was excellent. The conversation was not. Every time the topic drifted toward university history, someone quickly redirected it toward parking permits. You are beginning to suspect the parking permits are less interesting than advertised."
+    },
+    {
+      "day": 9,
+      "title": "The Key",
+      "text": "When leaving your office this evening, you found an old brass key on your desk. No note. No label. No indication of where it belongs. One side is engraved with a single letter: A. You place it in your drawer. Five minutes later, you check again. The key is gone."
+    },
+    {
+      "day": 10,
+      "title": "The Envelope",
+      "text": "An envelope appears under your office door. Inside is a single photograph. It shows the faculty group photo from ten years ago. Every professor is smiling. Except one. Standing in the back row is a familiar face. Your face. The problem is that you had never heard of Ravenswood University ten years ago. Or at least, you thought you hadn't."
+    }
+  ]
+}

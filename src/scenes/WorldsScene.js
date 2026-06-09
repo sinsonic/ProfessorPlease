@@ -4,6 +4,7 @@ import { loadRandomStudent } from "../game/dbLoader";
 import { createCareerHud, updateCareerHud } from "../game/careerHud";
 import { activatePendingBoosters, loadCareer, STUDENTS_PER_DAY } from "../game/careerStore";
 import { createHiddenObjectButton } from "../game/hiddenObjectAccess";
+import { playHomeEntrance, shouldPlayHomeEntrance } from "../game/homeEntrance";
 import { createShopIcon } from "../game/shopAccess";
 import {
   loadProgress,
@@ -30,7 +31,6 @@ export class WorldsScene extends Phaser.Scene {
     updateCareerHud(this.careerHud, this.career);
     this.classroom = drawClassroom(this, { depth: 0, paperCount: 3 });
 
-    // Centered vertical stack
     const logoH = 190;
     const panelH = 250;
     const buttonH = 150;
@@ -40,7 +40,7 @@ export class WorldsScene extends Phaser.Scene {
     const topY = cy - totalH / 2;
 
     const logoY = topY + logoH / 2 - 36;
-    this.add.text(cx, logoY - 8, "PROFESSOR,\nPLEASE!", {
+    const logo = this.add.text(cx, logoY - 8, "PROFESSOR,\nPLEASE!", {
       fontFamily: "Arial",
       fontSize: "72px",
       fontStyle: "bold",
@@ -49,38 +49,69 @@ export class WorldsScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     const panelY = logoY + logoH / 2 + gapA + panelH / 2;
-    this.createRoundedPanel(cx, panelY, 820, panelH);
+    const careerPanel = this.add.container(cx, panelY);
+    this.buildCareerPanel(careerPanel, panelH);
 
-    this.add.text(cx, panelY - 62, "Professor career", {
+    const buttonY = panelY + panelH / 2 + gapB + buttonH / 2;
+    const startLabel = this.career.studentsGradedToday > 0
+      ? `CONTINUE DAY (${this.career.studentsGradedToday}/${STUDENTS_PER_DAY})`
+      : "START WORK DAY";
+    const startButton = this.createMainButton(0, 0, startLabel, () => {
+      this.startExam();
+    });
+    const startButtonGroup = this.add.container(cx, buttonY);
+    startButtonGroup.add([startButton.shadow, startButton.bg, startButton.label]);
+    startButton.bg.setDepth(10);
+    startButton.label.setDepth(11);
+
+    const hiddenButton = createHiddenObjectButton(this, { depth: 60 });
+    const shopButton = createShopIcon(this, { depth: 60 });
+
+    if (shouldPlayHomeEntrance()) {
+      playHomeEntrance(this, {
+        classroom: this.classroom,
+        careerHud: this.careerHud,
+        logo,
+        careerPanel,
+        startButton: startButtonGroup,
+        shopButton,
+        hiddenButton,
+      });
+    }
+  }
+
+  buildCareerPanel(panel, panelH) {
+    const panelW = 820;
+    const shadow = this.add.graphics()
+      .fillStyle(0x000000, 0.06)
+      .fillRoundedRect(-panelW / 2 + 8, -panelH / 2 + 12, panelW, panelH, 24);
+    const bg = this.add.graphics()
+      .lineStyle(2, 0x0f172a, 0.06)
+      .fillStyle(0xfffdf7, 1)
+      .fillRoundedRect(-panelW / 2, -panelH / 2, panelW, panelH, 24)
+      .strokeRoundedRect(-panelW / 2, -panelH / 2, panelW, panelH, 24);
+
+    const title = this.add.text(0, -62, "Professor career", {
       fontFamily: "Arial",
       fontSize: "34px",
       color: "#64748b",
     }).setOrigin(0.5);
-    this.add.text(cx, panelY - 8, `Reputation: ${this.career.reputation}`, {
+
+    const reputation = this.add.text(0, -8, `Reputation: ${this.career.reputation}`, {
       fontFamily: "Arial",
       fontSize: "42px",
       fontStyle: "bold",
       color: "#1e2b57",
     }).setOrigin(0.5);
-    this.add.text(cx, panelY + 44, `Savings: $${this.career.money}`, {
+
+    const savings = this.add.text(0, 44, `Savings: $${this.career.money}`, {
       fontFamily: "Arial",
       fontSize: "36px",
       color: "#2b9f89",
       fontStyle: "bold",
     }).setOrigin(0.5);
 
-    const buttonY = panelY + panelH / 2 + gapB + buttonH / 2;
-    const startLabel = this.career.studentsGradedToday > 0
-      ? `CONTINUE DAY (${this.career.studentsGradedToday}/${STUDENTS_PER_DAY})`
-      : "START WORK DAY";
-    const startButton = this.createMainButton(cx, buttonY, startLabel, () => {
-      this.startExam();
-    });
-    startButton.bg.setDepth(10);
-    startButton.label.setDepth(11);
-
-    createHiddenObjectButton(this, { depth: 60 });
-    createShopIcon(this, { depth: 60 });
+    panel.add([shadow, bg, title, reputation, savings]);
   }
 
   async startExam() {
@@ -123,20 +154,8 @@ export class WorldsScene extends Phaser.Scene {
     }
   }
 
-  createRoundedPanel(x, y, width, height) {
-    this.add.graphics()
-      .fillStyle(0x000000, 0.06)
-      .fillRoundedRect(x - width / 2 + 8, y - height / 2 + 12, width, height, 24);
-    this.add.graphics()
-      .lineStyle(2, 0x0f172a, 0.06)
-      .fillStyle(0xfffdf7, 1)
-      .fillRoundedRect(x - width / 2, y - height / 2, width, height, 24)
-      .strokeRoundedRect(x - width / 2, y - height / 2, width, height, 24);
-  }
-
   createMainButton(x, y, label, onClick) {
-    // Rounded CTA with subtle shadow
-    this.add.graphics()
+    const shadow = this.add.graphics()
       .fillStyle(0x000000, 0.08)
       .fillRoundedRect(x - 620 / 2 + 6, y - 150 / 2 + 10, 620, 150, 26);
     const bg = this.add.rectangle(x, y, 620, 150, 0x2b9f89, 1)
@@ -149,6 +168,6 @@ export class WorldsScene extends Phaser.Scene {
       color: "#ffffff",
     }).setOrigin(0.5);
     bg.on("pointerdown", onClick);
-    return { bg, label: text };
+    return { shadow, bg, label: text };
   }
 }
